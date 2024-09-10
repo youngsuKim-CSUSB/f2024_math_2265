@@ -25,6 +25,7 @@ ggplot(loan50, aes(x=loan_amount)) +
 # --- 
 # how to install a package
 
-# Install the mosaic package if you haven't already
-install.packages("mosaic")
-library(mosaic)
+# Install the `readxl` package if you haven't already
+install.packages("readxl")
+library("readxl")
+help("readxl") # after executing this right, see the lower right corner

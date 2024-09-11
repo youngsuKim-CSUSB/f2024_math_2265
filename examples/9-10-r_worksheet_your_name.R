@@ -41,5 +41,5 @@ ggplot(data=<>, map=aes(x=<>)) +
 
 # (4) Are there any outliers?
 
-# Question 4. Save your work as 9-10-r_worksheet_your_name.R ans upload it Canvas: 
+# Question 4. Save your work as 9-10-r_worksheet_your_name.R and upload it to Canvas: 
 # https://csusb.instructure.com/courses/42324/assignments/670837

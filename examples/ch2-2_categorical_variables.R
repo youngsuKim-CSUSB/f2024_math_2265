@@ -1,4 +1,5 @@
 library("openintro")
+library("ggplot2")
 # library("tidyverse")
 
 ## Contingency Table (two-way table): use `loan50` or `loans_full_schema` 

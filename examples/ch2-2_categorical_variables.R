@@ -1,5 +1,6 @@
 library("openintro")
-library("tidyverse")
+library("ggplot2")
+# library("tidyverse")
 
 ## Contingency Table (two-way table)
 

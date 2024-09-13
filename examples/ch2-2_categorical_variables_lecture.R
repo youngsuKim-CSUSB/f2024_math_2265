@@ -2,18 +2,22 @@ library("openintro")
 library("ggplot2")
 # library("tidyverse")
 
-## Contingency Table (two-way table): use `loan50` or `loans_full_schema` 
+## Contingency Table (two-way table): use `loan50` or `loans_full_schema`
 str(loan50)
 
+loan50$homeownership
+
 ### bar plot and table of single variable
+table(loan50$homeownership)
+
 ggplot(data=loan50, map=aes(x=homeownership)) +
   geom_bar()
 
-table(loan50$homeownership)
-
-### contingency table (two categorical variables)
+## contingency table (two categorical variables)
 
 ### as.vector is used to suppress the 0 column
+loan50$verified_income
+
 t <- table(loan50$homeownership, as.vector(loan50$verified_income))
 t
 
@@ -35,10 +39,15 @@ ggplot(data=loan50, map=aes(x=homeownership, fill=verified_income)) +
 ggplot(data=loan50, map=aes(x=homeownership, fill=verified_income)) +
   geom_bar(position = "fill")
 
-## Check your understanding 
+ggplot(data=loan50, map=aes(x=verified_income, fill=homeownership)) +
+  geom_bar(position = "fill")
+
+## Upload your work to https://csusb.instructure.com/courses/42324/assignments/671701
+
+## Check your understanding
 
 ## categorical variables
-## (1) Grab two categorical variables and make a contingency table and bar plots 
+## (1) Grab two categorical variables and make a contingency table and bar plots
 ## (2) What can you say about the results?
 
 ## numerical variable

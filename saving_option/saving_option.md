@@ -14,8 +14,8 @@ Follow the instructions to change the setting:
 
 1. ## Make sure you have "Backup unsaved changes"
 
+1. Click on "Apply"
+
 1. ![apply](./6_apply.png)
-
-
 
 Please send your feedback (or complaint) to the instructor.

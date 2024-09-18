@@ -44,7 +44,7 @@ ggplot(data=my_data, aes(x=my_vec2)) +
   
 ### (b) Which data set has bigger median? Use R to verify your reasoning
   
-### (c) A typical observation in my_var2 is best represented by the 
+### (c) A typical observation in my_vec2 is best represented by the 
 ### mean or median?
 
 ## Be sure to share your answers and upload your file to Canvas

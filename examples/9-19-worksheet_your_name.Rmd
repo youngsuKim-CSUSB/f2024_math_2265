@@ -1,5 +1,3 @@
-
-
 ---
 title: "Coin Toss and R Markdown Introduction"
 output: pdf_document

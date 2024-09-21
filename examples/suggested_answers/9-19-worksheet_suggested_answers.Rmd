@@ -1,8 +1,11 @@
 ---
 title: "Coin Toss and R Markdown Introduction"
-output: pdf_document
+author: "yKim"
 date: "2024-09-19"
-author: <your name>
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -28,69 +31,70 @@ set.seed(2265)
 
 ### Short Recap
 
-In the following, we plot the box plot of the variable `interest_rate` in the dataset `loan50`. See how R Markdown runs R code. 
+In the following, we plot the box plot of the variable `interest_rate` in the dataset `loan50`. See how R Markdown runs R code.
 
 ```{r}
 ggplot(data=loan50, mapping=aes(x=interest_rate)) +
   geom_boxplot()
 ```
 
----
+------------------------------------------------------------------------
 
 ### Heads and Tails
 
-We make a simulation of a fair coin toss. Recall there is an equal change of getting a head or tail. 
+We make a simulation of a fair coin toss. Recall there is an equal change of getting a head or tail.
 
 ```{r}
 coin <- c("H", "T") # define a vector consisting of "H" and "T"
 sample(coin, 1)
 ```
 
-Execute this cell by clicking on the green |> button. 
+Execute this cell by clicking on the green \|\> button.
 
 Change the code to run the simulation 10 times.
 
 ```{r, error=TRUE}
 coin <- c("H", "T") # define a vector consisting of "H" and "T"
-sample(coin, <>)
+sample(coin, 10)
 ```
-This will result in an error since we want to grab 10 when there are only two. We can set the `replace` parameter `TRUE`. 
+
+This will result in an error since we want to grab 10 when there are only two. We can set the `replace` parameter `TRUE`.
 
 ```{r}
 coin <- c("H", "T") # define a vector consisting of "H" and "T"
 sample(coin, 10, replace = TRUE)
+# table(sample(coin, 10, replace = TRUE))
 ```
 
-Run this a few times. 
+Run this a few times.
 
----
+------------------------------------------------------------------------
 
 ## Questions
 
-**Question 1.** Did you get the even number of heads and tails? 
+**Question 1.** Did you get the even number of heads and tails?
 
-**Ans:** 
+**Ans:** No in general
 
----
+------------------------------------------------------------------------
 
-**Question 2.** Complete the following code to simulate tossing a coin 500 times. 
+**Question 2.** Complete the following code to simulate tossing a coin 500 times.
 
 ```{r, error=TRUE}
 coin <- c("H", "T") # define a vector consisting of "H" and "T"
-result <- sample(coin, <>, replace = TRUE)
+result <- sample(coin, 500, replace = TRUE)
 table(result) # `table` tallies the result  
 ```
 
-Run this code a few times. 
+Run this code a few times.
 
-> **The Law of Large Numbers**
-> As more observations are collected, the proportion of occurrences with a particular outcome converges to the probability of that outcome.
+> **The Law of Large Numbers** As more observations are collected, the proportion of occurrences with a particular outcome converges to the probability of that outcome.
 
----
+------------------------------------------------------------------------
 
 **Question 3.**
 
-The following code runs 1000 simulations of tossing coins 500 times and saves the number of heads in each simulation to the variable `num_heads.` 
+The following code runs 1000 simulations of tossing coins 500 times and saves the number of heads in each simulation to the variable `num_heads.`
 
 ```{r}
 coin <- c("H", "T") # define a vector consisting of "H" and "T"
@@ -106,15 +110,15 @@ Make a histogram of the simulations with the bin number of your choice.
 ```{r, error=TRUE}
 print(str(data_coin))
 ggplot(data=data_coin, aes(x=num_heads)) +
-  # xlim(0, 500) + # to make it to display x from 0 to 500
-  geom_<>(bins=<>)
+  xlim(0, 500) + # to make it to display x from 0 to 500
+  geom_histogram(bins=300)
 ```
 
----
+------------------------------------------------------------------------
 
-### Example of an unfair coin. 
+### Example of an unfair coin.
 
-In this example, we have an unfair coin where the change of getting tail is 75%. Compare this histogram and the one you made in the previous question. 
+In this example, we have an unfair coin where the change of getting tail is 75%. Compare this histogram and the one you made in the previous question.
 
 ```{r}
 coin <- c("H", "T") # define a vector consisting of "H" and "T"
@@ -123,20 +127,18 @@ data_un_coin <- data.frame(
   un_num_heads
 ) # it will be used in the next question
 ggplot(data=data_un_coin, aes(x=un_num_heads)) +
-  # xlim(0, 500) + 
-  geom_histogram(bins=29) 
+  xlim(0, 500) + 
+  geom_histogram(bins=300) 
 ```
 
----
+------------------------------------------------------------------------
 
 **Question 4.**
 
-Which simulation has a bigger mean of the number of heads? (fair coin vs. unfair coin above) 
-To answer this question, it may help uncommenting the line `xlim(0, 500) + `.
+Which simulation has a bigger mean of the number of heads? (fair coin vs. unfair coin above) To answer this question, it may help uncommenting the line `xlim(0, 500) +`.
 
-**Ans:** 
+**Ans:** The fair coin simulation
 
----
+------------------------------------------------------------------------
 
 ## Upload your work to Canvas
-

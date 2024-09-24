@@ -1,8 +1,10 @@
 ---
 title: "Conditional Probability"
-output: html_document
+author: "<your name>"
 date: "2024-09-24"
-author: <your name>
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -11,7 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Math 2265 Section 3.2
 
-You will need to replace `<>` in the source code or answer questions. 
+- Work as a group!
+- You will need to replace `<>` in the source code or answer questions. 
+- Update your name in L5.
 
 ### Load Packages
 
@@ -25,6 +29,7 @@ set.seed(2265)
 We will use the `smallpox` data set. From text book p. 99,
 
 > The `smallpox` data set provides a sample of 6,224 individuals from the year 1721 who were exposed to smallpox in Boston. Doctors at the time believed that inoculation, which involves exposing a person to the disease in a controlled form, could reduce the likelihood of death.
+> &nbsp
 > Each case represents one person with two variables: `inoculated` and `result`. The variable `inoculated` takes two levels: `yes` or `no`, indicating whether the person was inoculated or not. The
 variable `result` has outcomes `lived` or `died`.
 
@@ -36,26 +41,26 @@ str(<>)
 
 ---
 
-**Question 1.** What are the names of the variables?
+### Question 1. What are the names of the variables?
 
 **Answer:** 
 
 ---
 
-**Question 2.** Use `table` to tally each variable. The syntax is 
+### Question 2. Use `table` to tally each variable. 
 
 For the first variable: 
 
 ```{r, error=TRUE}
-table(smallpox$<variable>)
+table(smallpox$<>)
 ```
 For the second variable: 
 
 ```{r, error=TRUE}
-table(smallpox$<variable>)
+table(smallpox$<>)
 ```
 
-**Question 3.** 
+### Question 3.
 
 (a) Make a contingency table (two-way table) of the variables `result` and `inoculated` in the data set `smallpox` and save it to a variable `t`.
 
@@ -67,8 +72,94 @@ t
 (b) Make a proportional table.
 
 ```{r, error=TRUE}
-prop.table(t)
+options(digits = 1)
+prop.table(<>)
 ```
+## Summary of code
+
+Compared to the Tables 3.15 and 3.16 in the textbook,
+
+- we miss the totals and
+- the order of categories are reversed
+
+We can add `addmargins` for the former, but the latter is merely technical (which we won't put much emphasis). The following code will display the table in the same format.
+
+```{r}
+smallpox$result <- factor(smallpox$result, levels = c("lived", "died"))
+smallpox$inoculated <- factor(smallpox$inoculated, levels = c("yes", "no"))
+
+my_table <- table(smallpox$result, smallpox$inoculated)
+
+print(addmargins(my_table))
+options(digits = 2)
+print(addmargins(my_table)/sum(my_table))
+```
+
+---
+
+### Example/Suggested answer format:
+
+**What is the probability that a randomly selected person lived, given that they were inoculated?**
+
+\[
+P(\text{lived} \mid \text{yes}) = \frac{238}{244}
+\]
+
+```{r}
+238/244
+```
+
+### Question 4
+
+---
+
+1. **What is the probability that a randomly selected person was inoculated?**
+
+\[
+P(\text{<>}) = \frac{<>}{<>} = 
+\]
+
+```{r}
+
+```
+
+---
+
+2. **What is the probability that a person lived and was inoculated?**
+
+\[
+P(\text{<>} \cap \text{<>}) = \frac{<>}{<>} = 
+\]
+
+```{r}
+
+```
+
+---
+
+3. **What is the probability that a person was inoculated, given that they lived?**
+
+\[
+P(\text{<>} \mid \text{<>}) = \frac{<>}{<>} = 
+\]
+
+```{r}
+
+```
+
+---
+
+4. **If a randomly selected person died, what is the probability that they were inoculated?**
+
+\[
+P(\text{<>} \mid \text{<>}) = \frac{<>}{<>} = 
+\]
+
+```{r}
+
+```
+
+---
 
 ## Upload your work to Canvas
 

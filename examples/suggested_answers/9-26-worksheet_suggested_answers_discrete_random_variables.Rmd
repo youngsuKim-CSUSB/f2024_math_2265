@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Math 2265 Section 3.4
 
 - Work as a group!
-- You will need to replace `<>` or `"ans"` in the source code or answer questions
+You will need to replace `<>` or `"ans"` in the source code or answer questions
 - Update your name in L3
 - Make sure your save and `knit` your work (to html or pdf) before submitting it to Canvas
 
@@ -112,7 +112,7 @@ Let the random variable $X$ denote the number of pieces of checked luggage. Comp
 | Number of Luggage | 0   | 1   | 2   |
 |-------------------|-----|-----|-----|
 | $X$ (Revenue in $)|  0  |  30 |  60 |
-| $P(X)$            | 0.5 |"ans"|"ans"|
+| $P(X)$            | 0.5 | 0.33| 0.17|
 
 ### Question 1. What is the average baggage-related revenue per passenger?
 
@@ -126,9 +126,9 @@ Hint: Use the formula for the expected value:
 
 
 ```{r, error=TRUE}
-X <- c(0, 30, "ans")
-prob <- c(0.5, "ans", "ans")
-expected_value <- sum("ans"*"ans")
+X <- c(0, 30, 60)
+prob <- c(0.5, 0.33, 0.17)
+expected_value <- sum(X*prob)
 expected_value
 ```
 
@@ -149,7 +149,7 @@ Then, standard deviation:
 \]
 
 ```{r, error=TRUE}
-my_variance <- sum((X - "ans")^2 * "ans")
+my_variance <- sum((X - expected_value)^2 * prob)
 my_std_dev <- sqrt(my_variance)
 my_std_dev
 ```
@@ -157,7 +157,7 @@ my_std_dev
 ### Question 3. About how much revenue should the airline expect for a flight of 100 passengers?
 
 ```{r, error=TRUE}
-total_revenue <- expected_value * "ans"
+total_revenue <- expected_value * 100
 total_revenue
 ```
 

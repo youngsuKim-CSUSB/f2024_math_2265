@@ -9,11 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content />
+<meta name="author" content="your name" />
 
-<meta name="date" content="2024-09-24" />
+<meta name="date" content="2024-09-26" />
 
-<title>Conditional Probability</title>
+<title>Random Variables</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,167 +350,229 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Conditional Probability</h1>
-<h4 class="author"><your name></h4>
-<h4 class="date">2024-09-24</h4>
+<h1 class="title toc-ignore">Random Variables</h1>
+<h4 class="author">your name</h4>
+<h4 class="date">2024-09-26</h4>
 
 </div>
 
 
-<div id="math-2265-section-3.2" class="section level2">
-<h2>Math 2265 Section 3.2</h2>
+<div id="math-2265-section-3.4" class="section level2">
+<h2>Math 2265 Section 3.4</h2>
 <ul>
-<li>Work as a group!</li>
-<li>You will need to replace <code>&lt;&gt;</code> in the source code or
-answer questions.</li>
-<li>Update your name in L5.</li>
+<li>Work as a group! You will need to replace <code>&lt;&gt;</code> or
+<code>&quot;ans&quot;</code> in the source code or answer questions</li>
+<li>Update your name in L3</li>
+<li>Make sure your save and <code>knit</code> your work (to html or pdf)
+before submitting it to Canvas</li>
 </ul>
+<div id="question-0.-who-are-your-group-members-list-their-first-names-should-be-sufficient" class="section level3">
+<h3>Question 0. Who are your group members? (List their first names
+should be sufficient)</h3>
+<p><strong>Answer: </strong></p>
+<ol style="list-style-type: decimal">
+<li><code>&lt;name_1&gt;</code></li>
+<li><code>&lt;name_2&gt;</code></li>
+</ol>
+</div>
 <div id="load-packages" class="section level3">
 <h3>Load Packages</h3>
 <pre><code>## Loading required package: airports</code></pre>
 <pre><code>## Loading required package: cherryblossom</code></pre>
 <pre><code>## Loading required package: usdata</code></pre>
-<p>We will use the <code>smallpox</code> data set. From text book
-p. 99,</p>
-<blockquote>
-<p>The <code>smallpox</code> data set provides a sample of 6,224
-individuals from the year 1721 who were exposed to smallpox in Boston.
-Doctors at the time believed that inoculation, which involves exposing a
-person to the disease in a controlled form, could reduce the likelihood
-of death. &amp;nbsp Each case represents one person with two variables:
-<code>inoculated</code> and <code>result</code>. The variable
-<code>inoculated</code> takes two levels: <code>yes</code> or
-<code>no</code>, indicating whether the person was inoculated or not.
-The variable <code>result</code> has outcomes <code>lived</code> or
-<code>died</code>.</p>
-</blockquote>
-<p>First, use <code>str</code> to glance through the data set
-<code>smallpox</code></p>
-<pre class="r"><code>str(&lt;&gt;)</code></pre>
-<pre><code>## Error: &lt;text&gt;:1:5: unexpected &#39;&lt;&#39;
-## 1: str(&lt;
-##         ^</code></pre>
 <hr />
 </div>
-<div id="question-1.-what-are-the-names-of-the-variables" class="section level3">
-<h3>Question 1. What are the names of the variables?</h3>
-<p><strong>Answer:</strong></p>
-<hr />
 </div>
-<div id="question-2.-use-table-to-tally-each-variable." class="section level3">
-<h3>Question 2. Use <code>table</code> to tally each variable.</h3>
-<p>For the first variable:</p>
-<pre class="r"><code>table(smallpox$&lt;&gt;)</code></pre>
-<pre><code>## Error: &lt;text&gt;:1:16: unexpected &#39;&lt;&#39;
-## 1: table(smallpox$&lt;
-##                    ^</code></pre>
-<p>For the second variable:</p>
-<pre class="r"><code>table(smallpox$&lt;&gt;)</code></pre>
-<pre><code>## Error: &lt;text&gt;:1:16: unexpected &#39;&lt;&#39;
-## 1: table(smallpox$&lt;
-##                    ^</code></pre>
-</div>
-<div id="question-3." class="section level3">
-<h3>Question 3.</h3>
-<ol style="list-style-type: lower-alpha">
-<li>Make a contingency table (two-way table) of the variables
-<code>result</code> and <code>inoculated</code> in the data set
-<code>smallpox</code> and save it to a variable <code>t</code>.</li>
-</ol>
-<pre class="r"><code>t &lt;- table(smallpox$&lt;&gt;, smallpox$&lt;&gt;)
-t</code></pre>
-<pre><code>## Error: &lt;text&gt;:1:21: unexpected &#39;&lt;&#39;
-## 1: t &lt;- table(smallpox$&lt;
-##                         ^</code></pre>
-<ol start="2" style="list-style-type: lower-alpha">
-<li>Make a proportional table.</li>
-</ol>
-<pre class="r"><code>options(digits = 1)
-prop.table(&lt;&gt;)</code></pre>
-<pre><code>## Error: &lt;text&gt;:2:12: unexpected &#39;&lt;&#39;
-## 1: options(digits = 1)
-## 2: prop.table(&lt;
-##               ^</code></pre>
-</div>
-</div>
-<div id="summary-of-code" class="section level2">
-<h2>Summary of code</h2>
-<p>Compared to the Tables 3.15 and 3.16 in the textbook,</p>
-<ul>
-<li>we miss the totals and</li>
-<li>the order of categories are reversed</li>
-</ul>
-<p>We can add <code>addmargins</code> for the former, but the latter is
-merely technical (which we won’t put much emphasis). The following code
-will display the table in the same format.</p>
-<pre class="r"><code>smallpox$result &lt;- factor(smallpox$result, levels = c(&quot;lived&quot;, &quot;died&quot;))
-smallpox$inoculated &lt;- factor(smallpox$inoculated, levels = c(&quot;yes&quot;, &quot;no&quot;))
-
-my_table &lt;- table(smallpox$result, smallpox$inoculated)
-
-print(addmargins(my_table))</code></pre>
-<pre><code>##        
-##          yes   no  Sum
-##   lived  238 5136 5374
-##   died     6  844  850
-##   Sum    244 5980 6224</code></pre>
-<pre class="r"><code>options(digits = 2)
-print(addmargins(my_table)/sum(my_table))</code></pre>
-<pre><code>##        
-##             yes      no     Sum
-##   lived 0.03824 0.82519 0.86343
-##   died  0.00096 0.13560 0.13657
-##   Sum   0.03920 0.96080 1.00000</code></pre>
-<hr />
-<div id="examplesuggested-answer-format" class="section level3">
-<h3>Example/Suggested answer format:</h3>
-<p><strong>What is the probability that a randomly selected person
-lived, given that they were inoculated?</strong></p>
-<p><span class="math display">\[
-P(\text{lived} \mid \text{yes}) = \frac{238}{244}
-\]</span></p>
-<pre class="r"><code>238/244</code></pre>
-<pre><code>## [1] 0.98</code></pre>
-</div>
-<div id="question-4" class="section level3">
-<h3>Question 4</h3>
-<hr />
+<div id="example" class="section level2">
+<h2>Example</h2>
+<p>Review the example and code below to answer the questions listed
+after the example. There is no question in the example.</p>
+<div id="expected-value-of-a-discrete-random-variable" class="section level3">
+<h3>Expected Value of a Discrete Random Variable</h3>
+<p>In a game of cards, you win $1 if you draw a heart (excluding the ace
+of hearts), $5 if you draw an ace (including the ace of hearts), $10 if
+you draw the king of spades, and nothing for any other card you draw.
+Write the probability model for your winnings, and calculate your
+expected winning.</p>
+<p>The table below provides the relevant information:</p>
+<table>
+<colgroup>
+<col width="28%" />
+<col width="22%" />
+<col width="13%" />
+<col width="21%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Event</th>
+<th>Heart (not ace)</th>
+<th>Ace</th>
+<th>King of spades</th>
+<th>All else</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(X\)</span> (reward in $)</td>
+<td>1</td>
+<td>5</td>
+<td>10</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(P(X)\)</span></td>
+<td>12/52</td>
+<td>4/52</td>
+<td>1/52</td>
+<td>35/52</td>
+</tr>
+</tbody>
+</table>
 <ol style="list-style-type: decimal">
-<li><strong>What is the probability that a randomly selected person was
-inoculated?</strong></li>
+<li>Create the variables to store the probability distribution</li>
 </ol>
-<p><span class="math display">\[
-P(\text{&lt;&gt;}) = \frac{&lt;&gt;}{&lt;&gt;} =
-\]</span></p>
-<hr />
+<pre class="r"><code># Define the winnings for X and their respective probabilities P(X)
+rewards &lt;- c(1, 5, 10, 0)
+probabilities &lt;- c(12/52, 4/52, 1/52, 35/52)
+print(rewards)</code></pre>
+<pre><code>## [1]  1  5 10  0</code></pre>
+<pre class="r"><code>print(probabilities)</code></pre>
+<pre><code>## [1] 0.23076923 0.07692308 0.01923077 0.67307692</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><strong>What is the probability that a person lived and was
-inoculated?</strong></li>
+<li>Use the formula for the expected value:</li>
 </ol>
 <p><span class="math display">\[
-P(\text{&lt;&gt;} \cap \text{&lt;&gt;}) = \frac{&lt;&gt;}{&lt;&gt;} =
+\mathbb{E}(X) = \sum_{i} x_i \cdot P(X = x_i)
 \]</span></p>
-<hr />
+<pre class="r"><code>expected_value &lt;- sum(rewards * probabilities)
+expected_value</code></pre>
+<pre><code>## [1] 0.8076923</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li><strong>What is the probability that a person was inoculated, given
-that they lived?</strong></li>
+<li>Calculate the standard deviation</li>
 </ol>
+<p>Hint: First, calculate the variance using the formula:</p>
 <p><span class="math display">\[
-P(\text{&lt;&gt;} \mid \text{&lt;&gt;}) = \frac{&lt;&gt;}{&lt;&gt;} =
+\text{Var}(X) = \sum_{i} (x_i - \mathbb{E}(X))^2 \cdot P(X = x_i)
 \]</span></p>
-<hr />
-<ol start="4" style="list-style-type: decimal">
-<li><strong>If a randomly selected person died, what is the probability
-that they were inoculated?</strong></li>
-</ol>
+<p>Then, take the square root to find the standard deviation:</p>
 <p><span class="math display">\[
-P(\text{&lt;&gt;} \mid \text{&lt;&gt;}) = \frac{&lt;&gt;}{&lt;&gt;} =
+\sigma_X = \sqrt{\text{Var}(X)}
 \]</span></p>
+<pre class="r"><code># Calculate the variance
+variance &lt;- sum((rewards - expected_value)^2 * probabilities)
+
+# Calculate the standard deviation
+std_dev &lt;- sqrt(variance)
+std_dev</code></pre>
+<pre><code>## [1] 1.850556</code></pre>
 <hr />
 </div>
 </div>
-<div id="upload-your-work-to-canvas" class="section level2">
-<h2>Upload your work to Canvas</h2>
+<div id="baggage-fees-worksheet" class="section level2">
+<h2>Baggage Fees Worksheet</h2>
+<p>We will work on Problem 2.38 in HW3.</p>
+<div id="baggage-fees-in-hw3" class="section level3">
+<h3>2.38 Baggage fees in HW3</h3>
+<blockquote>
+<p>An airline charges the following baggage fees: $30 for the first bag
+and $30 for the second. Suppose 50% of passengers have no checked
+luggage, 33% have only one piece of checked luggage, and 17% have two
+pieces. We assume a negligible portion of people check more than two
+bags.</p>
+</blockquote>
+<p>Let the random variable <span class="math inline">\(X\)</span> denote
+the number of pieces of checked luggage. Complete the following table of
+the probability distribution (we will ignore the <code>3+</code>
+category):</p>
+</div>
+<div id="complete-the-table-below" class="section level3">
+<h3>Complete the table below</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Number of Luggage</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(X\)</span> (Revenue in $)</td>
+<td>0</td>
+<td>30</td>
+<td>60</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(P(X)\)</span></td>
+<td>0.5</td>
+<td>0.33</td>
+<td>0.17</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="question-1.-what-is-the-average-baggage-related-revenue-per-passenger" class="section level3">
+<h3>Question 1. What is the average baggage-related revenue per
+passenger?</h3>
+<p>Complete the code below to store your answer to the variable
+<code>expected_value</code>.</p>
+<p>Hint: Use the formula for the expected value:</p>
+<p><span class="math display">\[
+\mathbb{E}(X) = \sum_{i} x_i \cdot P(X = x_i)
+\]</span></p>
+<pre class="r"><code>X &lt;- c(0, 30, 60)
+prob &lt;- c(0.5, 0.33, 0.17)
+expected_value &lt;- sum(X*prob)
+expected_value</code></pre>
+<pre><code>## [1] 20.1</code></pre>
+</div>
+<div id="question-2.-what-is-the-standard-deviation-of-baggage-related-revenue" class="section level3">
+<h3>Question 2. What is the standard deviation of baggage-related
+revenue?</h3>
+<p>Complete the code below to store your answer to the variable
+<code>expected_value</code>.</p>
+<p>Hint: First, use the formula for variance, and then take the square
+root to get the standard deviation:</p>
+<p><span class="math display">\[
+\text{Var}(X) = \sum_{i} (x_i - \mathbb{E}(X))^2 \cdot P(X = x_i)
+\]</span></p>
+<p>Then, standard deviation:</p>
+<p><span class="math display">\[
+\sigma_X = \sqrt{\text{Var}(X)}
+\]</span></p>
+<pre class="r"><code>my_variance &lt;- sum((X - expected_value)^2 * prob)
+my_std_dev &lt;- sqrt(my_variance)
+my_std_dev</code></pre>
+<pre><code>## [1] 22.47198</code></pre>
+</div>
+<div id="question-3.-about-how-much-revenue-should-the-airline-expect-for-a-flight-of-100-passengers" class="section level3">
+<h3>Question 3. About how much revenue should the airline expect for a
+flight of 100 passengers?</h3>
+<pre class="r"><code>total_revenue &lt;- expected_value * 100
+total_revenue</code></pre>
+<pre><code>## [1] 2010</code></pre>
+<hr />
+</div>
+<div id="question-4.-knit-your-code-and-check-your-outcomes." class="section level3">
+<h3>Question 4. Knit your code and check your outcomes.</h3>
+<p>Did it produce an outcome?</p>
+<p>Yes/No</p>
+</div>
+<div id="question-5.-check-your-answer" class="section level3">
+<h3>Question 5. Check your answer</h3>
+<pre class="r"><code>if(sum((c(expected_value,my_std_dev, total_revenue) - c(20.1, 22.47198, 2010))&lt;0.001)==3) {
+  print(&quot;Your answers are correct&quot;)
+} else {
+  print(&quot;Check your answers&quot;)
+}</code></pre>
+<pre><code>## [1] &quot;Your answers are correct&quot;</code></pre>
+</div>
+<div id="discuss-your-answers-and-help-your-group-members-before-uploading-your-work-to-canvas" class="section level3">
+<h3>Discuss your answers and help your group members before uploading
+your work to Canvas</h3>
+</div>
 </div>
 
 

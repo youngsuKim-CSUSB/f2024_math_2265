@@ -362,99 +362,168 @@ display: none;
 <ul>
 <li>Work as a group!</li>
 <li>You will need to replace <code>&lt;&gt;</code> in the source code or
-answer questions</li>
-<li>Update your name in L5</li>
-<li>Make sure your save and <code>knit</code> your work (to html or pdf)
-before submitting it to Canvas</li>
+answer questions.</li>
+<li>Update your name in L5.</li>
 </ul>
-<div id="question-0.-who-are-your-group-members-list-their-first-names-should-be-sufficient" class="section level3">
-<h3>Question 0. Who are your group members? (List their first names
-should be sufficient)</h3>
-<p><strong>Answer: </strong></p>
-<ol style="list-style-type: decimal">
-<li><name_1></li>
-<li><name_2></li>
-</ol>
-</div>
 <div id="load-packages" class="section level3">
 <h3>Load Packages</h3>
 <pre><code>## Loading required package: airports</code></pre>
 <pre><code>## Loading required package: cherryblossom</code></pre>
 <pre><code>## Loading required package: usdata</code></pre>
+<p>We will use the <code>smallpox</code> data set. From text book
+p. 99,</p>
+<blockquote>
+<p>The <code>smallpox</code> data set provides a sample of 6,224
+individuals from the year 1721 who were exposed to smallpox in Boston.
+Doctors at the time believed that inoculation, which involves exposing a
+person to the disease in a controlled form, could reduce the likelihood
+of death. &amp;nbsp Each case represents one person with two variables:
+<code>inoculated</code> and <code>result</code>. The variable
+<code>inoculated</code> takes two levels: <code>yes</code> or
+<code>no</code>, indicating whether the person was inoculated or not.
+The variable <code>result</code> has outcomes <code>lived</code> or
+<code>died</code>.</p>
+</blockquote>
+<p>First, use <code>str</code> to glance through the data set
+<code>smallpox</code></p>
+<pre class="r"><code>str(smallpox)</code></pre>
+<pre><code>## tibble [6,224 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ result    : Factor w/ 2 levels &quot;died&quot;,&quot;lived&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ inoculated: Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 2 2 2 2 2 2 2 2 2 ...</code></pre>
+<hr />
+</div>
+<div id="question-1.-what-are-the-names-of-the-variables" class="section level3">
+<h3>Question 1. What are the names of the variables?</h3>
+<p><strong>Answer:</strong> result, inoculated</p>
+<hr />
+</div>
+<div id="question-2.-use-table-to-tally-each-variable." class="section level3">
+<h3>Question 2. Use <code>table</code> to tally each variable.</h3>
+<p>For the first variable:</p>
+<pre class="r"><code>table(smallpox$result)</code></pre>
+<pre><code>## 
+##  died lived 
+##   850  5374</code></pre>
+<p>For the second variable:</p>
+<pre class="r"><code>table(smallpox$inoculated)</code></pre>
+<pre><code>## 
+##   no  yes 
+## 5980  244</code></pre>
+</div>
+<div id="question-3." class="section level3">
+<h3>Question 3.</h3>
+<ol style="list-style-type: lower-alpha">
+<li>Make a contingency table (two-way table) of the variables
+<code>result</code> and <code>inoculated</code> in the data set
+<code>smallpox</code> and save it to a variable <code>t</code>.</li>
+</ol>
+<pre class="r"><code>t &lt;- table(smallpox$result, smallpox$inoculated)
+t</code></pre>
+<pre><code>##        
+##           no  yes
+##   died   844    6
+##   lived 5136  238</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Make a proportional table.</li>
+</ol>
+<pre class="r"><code>options(digits = 1)
+prop.table(t)</code></pre>
+<pre><code>##        
+##            no   yes
+##   died  0.136 0.001
+##   lived 0.825 0.038</code></pre>
 </div>
 </div>
-<div id="example" class="section level2">
-<h2>Example</h2>
-<p>Review the example and code below to answer the questions listed
-after the example. There is no question in the example.</p>
-<div id="expected-value-of-a-discrete-random-variable" class="section level3">
-<h3>Expected Value of a Discrete Random Variable</h3>
-<p>In a game of cards, you win $1 if you draw a heart (excluding the ace
-of hearts), $5 if you draw an ace (including the ace of hearts), $10 if
-you draw the king of spades, and nothing for any other card you draw.
-Write the probability model for your winnings, and calculate your
-expected winning.</p>
-<p>The table below provides the relevant information:</p>
-<table>
-<colgroup>
-<col width="28%" />
-<col width="22%" />
-<col width="13%" />
-<col width="21%" />
-<col width="13%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Event</th>
-<th>Heart (not ace)</th>
-<th>Ace</th>
-<th>King of spades</th>
-<th>All else</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(X\)</span> (reward in $)</td>
-<td>1</td>
-<td>5</td>
-<td>10</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(P(X)\)</span></td>
-<td>12/52</td>
-<td>4/52</td>
-<td>1/52</td>
-<td>35/52</td>
-</tr>
-</tbody>
-</table>
-<ol style="list-style-type: decimal">
-<li>Create the variables to store the probability distribution</li>
-</ol>
-<pre class="r"><code># Define the winnings for X and their respective probabilities P(X)
-rewards &lt;- c(1, 5, 10, 0)
-probabilities &lt;- c(12/52, 4/52, 1/52, 35/52)</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Use the formula for the expected value:</li>
-</ol>
-<p>[ (X) = _{i} x_i P(X = x_i)]</p>
-<pre class="r"><code>expected_value &lt;- sum(rewards * probabilities)</code></pre>
-<ol start="3" style="list-style-type: decimal">
-<li>Calculate the standard deviation</li>
-</ol>
-<p>Hint: First, calculate the variance using the formula:</p>
-<p>[ (X) = _{i} (x_i - (X))^2 P(X = x_i)]</p>
-<p>Then, take the square root to find the standard deviation:</p>
-<p>[ _X = ]</p>
-<pre class="r"><code># Calculate the variance
-variance &lt;- sum((rewards - expected_value)^2 * probabilities)
+<div id="summary-of-code" class="section level2">
+<h2>Summary of code</h2>
+<p>Compared to the Tables 3.15 and 3.16 in the textbook,</p>
+<ul>
+<li>we miss the totals and</li>
+<li>the order of categories are reversed</li>
+</ul>
+<p>We can add <code>addmargins</code> for the former, but the latter is
+merely technical (which we won’t put much emphasis). The following code
+will display the table in the same format.</p>
+<pre class="r"><code>smallpox$result &lt;- factor(smallpox$result, levels = c(&quot;lived&quot;, &quot;died&quot;))
+smallpox$inoculated &lt;- factor(smallpox$inoculated, levels = c(&quot;yes&quot;, &quot;no&quot;))
 
-# Calculate the standard deviation
-std_dev &lt;- sqrt(variance)
-std_dev</code></pre>
-<pre><code>## [1] 1.850556</code></pre>
+my_table &lt;- table(smallpox$result, smallpox$inoculated)
+
+print(addmargins(my_table))</code></pre>
+<pre><code>##        
+##          yes   no  Sum
+##   lived  238 5136 5374
+##   died     6  844  850
+##   Sum    244 5980 6224</code></pre>
+<pre class="r"><code>options(digits = 2)
+print(addmargins(my_table)/sum(my_table))</code></pre>
+<pre><code>##        
+##             yes      no     Sum
+##   lived 0.03824 0.82519 0.86343
+##   died  0.00096 0.13560 0.13657
+##   Sum   0.03920 0.96080 1.00000</code></pre>
+<hr />
+<div id="examplesuggested-answer-format" class="section level3">
+<h3>Example/Suggested answer format:</h3>
+<p><strong>What is the probability that a randomly selected person
+lived, given that they were inoculated?</strong></p>
+<p><span class="math display">\[
+P(\text{lived} \mid \text{yes}) = \frac{238}{244}
+\]</span></p>
+<pre class="r"><code>238/244</code></pre>
+<pre><code>## [1] 0.98</code></pre>
 </div>
+<div id="question-4" class="section level3">
+<h3>Question 4</h3>
+<hr />
+<ol style="list-style-type: decimal">
+<li><strong>What is the probability that a randomly selected person was
+inoculated?</strong></li>
+</ol>
+<p><span class="math display">\[
+P(\text{inoculated}) = \frac{244}{6224} =
+\]</span></p>
+<pre class="r"><code>244/6224</code></pre>
+<pre><code>## [1] 0.039</code></pre>
+<hr />
+<ol start="2" style="list-style-type: decimal">
+<li><strong>What is the probability that a person lived and was
+inoculated?</strong></li>
+</ol>
+<p><span class="math display">\[
+P(\text{lived} ~\text{and}~ \text{inoculated}) = \frac{238}{6224} =
+\]</span></p>
+<pre class="r"><code>238/6224</code></pre>
+<pre><code>## [1] 0.038</code></pre>
+<hr />
+<ol start="3" style="list-style-type: decimal">
+<li><strong>What is the probability that a person was inoculated, given
+that they lived?</strong></li>
+</ol>
+<p><span class="math display">\[
+P(\text{innoculated} \mid \text{lived}) = \frac{238}{5374}
+\stackrel{formula}= \frac{P(\text{innoculated} ~\text{and}~
+\text{lived})}{P(\text{lived})}= \frac{238}{6224}/\frac{5374}{6224}
+\]</span></p>
+<pre class="r"><code>238/5374</code></pre>
+<pre><code>## [1] 0.044</code></pre>
+<hr />
+<ol start="4" style="list-style-type: decimal">
+<li><strong>If a randomly selected person died, what is the probability
+that they were inoculated?</strong></li>
+</ol>
+<p><span class="math display">\[
+P(\text{inoculated} \mid \text{died}) = \frac{6}{850}
+\stackrel{formula}= \frac{P(\text{innoculated} ~\text{and}~
+\text{died})}{P(\text{died})} = \frac{6}{6224}/\frac{850}{6224}
+\]</span></p>
+<pre class="r"><code>6/850</code></pre>
+<pre><code>## [1] 0.0071</code></pre>
+<hr />
+</div>
+</div>
+<div id="upload-your-work-to-canvas" class="section level2">
+<h2>Upload your work to Canvas</h2>
 </div>
 
 

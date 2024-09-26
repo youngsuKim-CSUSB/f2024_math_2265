@@ -1,0 +1,169 @@
+---
+title: "Conditional Probability"
+author: "<your name>"
+date: "2024-09-24"
+output:
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Math 2265 Section 3.2
+
+- Work as a group!
+- You will need to replace `<>` in the source code or answer questions
+- Update your name in L5
+- Make sure your save and `knit` your work (to html or pdf) before submitting it to Canvas
+
+### Question 0. Who are your group members? (List their first names should be sufficient)
+
+**Answer: ** 
+
+  1. <name_1>
+  1. <name_2>
+
+### Load Packages
+
+```{r, echo=FALSE}
+library(openintro)
+library(ggplot2)
+library(tinytex)  # to knit to PDF
+set.seed(2265)
+```
+
+## Example
+
+Review the example and code below to answer the questions listed after the example. There is no question in the example. 
+
+### Expected Value of a Discrete Random Variable
+
+In a game of cards, you win $1 if you draw a heart (excluding the ace of hearts), $5 if you draw an ace (including the ace of hearts), $10 if you draw the king of spades, and nothing for any other card you draw. Write the probability model for your winnings, and calculate your expected winning.
+
+The table below provides the relevant information:
+
+| Event               | Heart (not ace) | Ace      | King of spades | All else |
+|---------------------|-----------------|----------|----------------|----------|
+| $X$ (reward in $)   | 1               | 5        | 10             | 0        |
+| $P(X)$              | 12/52           | 4/52     | 1/52           | 35/52    |
+
+1. Create the variables to store the probability distribution
+
+```{r}
+# Define the winnings for X and their respective probabilities P(X)
+rewards <- c(1, 5, 10, 0)
+probabilities <- c(12/52, 4/52, 1/52, 35/52)
+```
+
+2. Use the formula for the expected value:
+
+[
+\mathbb{E}(X) = \sum_{i} x_i \cdot P(X = x_i)
+]
+
+```{r}
+expected_value <- sum(rewards * probabilities)
+```
+
+3. Calculate the standard deviation
+
+Hint: First, calculate the variance using the formula:
+
+[
+\text{Var}(X) = \sum_{i} (x_i - \mathbb{E}(X))^2 \cdot P(X = x_i)
+]
+
+Then, take the square root to find the standard deviation:
+
+[
+\sigma_X = \sqrt{\text{Var}(X)}
+]
+
+```{r}
+# Calculate the variance
+variance <- sum((rewards - expected_value)^2 * probabilities)
+
+# Calculate the standard deviation
+std_dev <- sqrt(variance)
+std_dev
+```
+
+
+---
+
+## Baggage Fees Worksheet
+
+We will work on Problem 2.38 in HW3.
+
+### 2.38 Baggage fees in HW3
+
+> An airline charges the following baggage fees: $30 for the first bag and $30 for the second. Suppose 50% of passengers have no checked luggage, 33% have only one piece of checked luggage, and 17% have two pieces. We assume a negligible portion of people check more than two bags.
+
+Let the random variable $X$ denote the number of pieces of checked luggage. Complete the following table of the probability distribution (we will ignore the `3+` category):
+
+| Number of Luggage | 0   | 1   | 2   |
+|-------------------|-----|-----|-----|
+| $X$ (Revenue in $)|  0  |  30 |  60 |
+| $P(X)$            | 0.5 | 0.33| 0.17|
+
+### Question 1. What is the average baggage-related revenue per passenger?
+
+Complete the code below to store your answer to the variable `expected_value`.
+
+Hint: Use the formula for the expected value:
+
+\[
+\mathbb{E}(X) = \sum_{i} x_i \cdot P(X = x_i)
+\]
+
+
+```{r, error=TRUE}
+X <- c(0, 30, <>)
+prob <- c(0.5, <>, <>)
+expected_value <- sum(<>)
+expected_value
+```
+
+### Question 2. What is the standard deviation of baggage-related revenue?
+
+Complete the code below to store your answer to the variable `expected_value`.
+
+Hint: First, use the formula for variance, and then take the square root to get the standard deviation:
+
+\[
+\text{Var}(X) = \sum_{i} (x_i - \mathbb{E}(X))^2 \cdot P(X = x_i)
+\]
+
+Then, standard deviation:
+
+\[
+\sigma_X = \sqrt{\text{Var}(X)}
+\]
+
+```{r, error=TRUE}
+my_variance <- sum((<> - <>)^2 * <>)
+my_std_dev <- sqrt(my_variance)
+std_dev
+```
+
+### Question 3. About how much revenue should the airline expect for a flight of 100 passengers?
+
+```{r, error=TRUE}
+total_revenue <- expected_value * <>
+total_revenue
+```
+
+---
+### Question 4. Knit your code and check your outcomes.
+
+Did it produce an outcome? 
+
+Yes/No
+
+### Question 5. Check your answer
+
+20.1, 22.47, 2010
+
+---
+### Discuss your answers and help your group members before uploading your work to Canvas

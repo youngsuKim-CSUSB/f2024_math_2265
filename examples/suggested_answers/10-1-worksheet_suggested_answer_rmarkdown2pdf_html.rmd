@@ -1,7 +1,7 @@
 ---
-title: "Random Variables"
+title: "R Markdown to PDF and HTML"
 author: "your name"
-date: "2024-09-26"
+date: "2024-10-1"
 output:
   pdf_document: default
   html_document: default

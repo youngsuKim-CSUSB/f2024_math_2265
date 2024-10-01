@@ -1,0 +1,94 @@
+---
+title: "Random Variables"
+author: "your name"
+date: "2024-09-26"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Math 2265 Chatch-up
+
+- Work as a group!
+- You will need to replace `"ans"` or `your_answer` in the source code or answer questions
+- Update your name in L3
+- Make sure your save and `knit` your work (to html or pdf) before submitting it to Canvas
+
+### Question 0. Who are your group members? (List their first names should be sufficient)
+
+**Answer: ** 
+
+  1. `<name_1>`
+  1. `<name_2>`
+
+### Load Packages
+
+```{r, echo=FALSE}
+library(openintro)
+library(ggplot2)
+# if (!tinytex::is_tinytex()) {
+#  tinytex::install_tinytex()
+#} # this ensures the necessary package is installed for knit to pdf
+library(tinytex)  # to knit to PDF
+set.seed(2265)
+```
+
+---
+
+### If you need more time to get used to `Markdown`, use the `Visual` mode.
+
+The icon is located in the upper-left corner next to `source`. 
+
+---
+
+### Task 1
+
+Go to the data set list and choose one you are most interested in:
+
+https://www.openintro.org/data/
+
+Use `str` and `head` to checkout the dataset.
+
+```{r}
+# Define the winnings for X and their respective probabilities P(X)
+str(absenteeism)
+```
+
+```{r}
+# Define the winnings for X and their respective probabilities P(X)
+head(absenteeism)
+```
+
+---
+
+### Task 2
+
+Choose a numerical variable and plot its histogram.
+
+```{r}
+# Define the winnings for X and their respective probabilities P(X)
+ggplot(data=absenteeism, aes(x=days)) +
+  geom_histogram()
+```
+
+
+### Task 3
+
+Choose a categorical varialbe and make a table.
+
+
+```{r}
+# Define the winnings for X and their respective probabilities P(X)
+table(absenteeism$sex)
+```
+
+---
+### Task 4. Knit your code and check your outcomes.
+
+You are only allowed to upload pdf or html
+
+### Share your work and help your group members before uploading your work to Canvas

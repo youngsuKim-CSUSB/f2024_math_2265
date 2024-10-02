@@ -54,12 +54,10 @@ https://www.openintro.org/data/
 Use `str` and `head` to checkout the dataset.
 
 ```{r}
-# Define the winnings for X and their respective probabilities P(X)
 str(your_answer)
 ```
 
 ```{r}
-# Define the winnings for X and their respective probabilities P(X)
 head(your_answer)
 ```
 
@@ -70,7 +68,6 @@ head(your_answer)
 Choose a numerical variable and plot its histogram.
 
 ```{r}
-# Define the winnings for X and their respective probabilities P(X)
 ggplot(data=your_answer, aes(x=your_answer)) +
   geom_histogram()
 ```
@@ -82,7 +79,6 @@ Choose a categorical varialbe and make a table.
 
 
 ```{r}
-# Define the winnings for X and their respective probabilities P(X)
 table(your_answer$your_answer)
 ```
 

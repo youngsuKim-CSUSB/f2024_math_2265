@@ -54,12 +54,10 @@ https://www.openintro.org/data/
 Use `str` and `head` to checkout the dataset.
 
 ```{r}
-# Define the winnings for X and their respective probabilities P(X)
 str(absenteeism)
 ```
 
 ```{r}
-# Define the winnings for X and their respective probabilities P(X)
 head(absenteeism)
 ```
 
@@ -70,7 +68,6 @@ head(absenteeism)
 Choose a numerical variable and plot its histogram.
 
 ```{r}
-# Define the winnings for X and their respective probabilities P(X)
 ggplot(data=absenteeism, aes(x=days)) +
   geom_histogram()
 ```
@@ -82,7 +79,6 @@ Choose a categorical varialbe and make a table.
 
 
 ```{r}
-# Define the winnings for X and their respective probabilities P(X)
 table(absenteeism$sex)
 ```
 

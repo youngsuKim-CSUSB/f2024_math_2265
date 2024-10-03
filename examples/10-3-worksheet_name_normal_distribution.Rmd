@@ -1,0 +1,109 @@
+---
+title: "Introduction to Normal Distribution"
+author: "your name"
+date: "2024-10-3"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Math 2265 Sec 4.1 Normal Distribution Part I
+
+- Work as a group!
+- You will need to replace `"ans"` or `your_answer` in the source code or answer questions
+- Update your name in L3
+- Add your group members name below
+- Make sure your save and `knit` your work (to html or pdf) before submitting it to Canvas
+
+### Question 0. Who are your group members? (List their first names should be sufficient)
+
+**Answer: ** 
+
+  1. `<name_1>`
+  1. `<name_2>`
+
+### Load Packages
+
+```{r, echo=FALSE}
+library(openintro)
+library(ggplot2)
+if (!tinytex::is_tinytex()) {
+  tinytex::install_tinytex()
+} # this ensures the necessary package is installed for knit to pdf
+library(tinytex)  # to knit to PDF
+library(mosaic)
+set.seed(2265)
+```
+
+---
+
+### If you need more time to get used to `Markdown`, use the `Visual` mode.
+
+The icon is located in the upper-left corner next to `source`. 
+
+---
+
+### Example 1: Plot normal distributions
+
+```{r}
+curve(dnorm(x, mean = 0, sd = 1), from = -6, to = 6, 
+      main = "Normal Distribution (PDF, mean = 0, sd = 1)",
+      xlab = "x", ylab = "Density")
+```
+### Task 1: Plot some normal distributions with mean and standard deviation of your choice
+
+You may need to change `from` and `to` parameters too. 
+
+Example 1:
+```{r}
+curve(dnorm(x, mean = your_answer, sd = your_answer), from = -6, to = 6)
+```
+
+Example 2:
+
+```{r}
+curve(dnorm(x, mean = your_answer, sd = your_answer), from = -6, to = 6)
+```
+
+### Example 2: Normal distribution with colors
+
+```{r}
+# Plot the normal distribution curve
+curve(dnorm(x, mean = 0, sd = 1), from = -4, to = 4, 
+      main = "Normal Distribution with Shaded Area (x <= 0)",
+      xlab = "x", ylab = "Density")
+
+# Shade the area under the curve for x <= 0
+x_vals <- seq(-4, 0, length.out = 100)  # Sequence of x values from -4 to 0
+y_vals <- dnorm(x_vals, mean = 0, sd = 1)  # Corresponding y values for the curve
+polygon(c(x_vals, 0), c(y_vals, 0), col = "lightblue", border = NA)  # Fill the area
+```
+This example is excellent but a bit involved. We will use another package `mosaic` for plotting normal distributions.
+
+### Z-Score
+
+$$
+Z = \frac{x-\mu}{\rho},
+$$
+where $\mu$ is the mean and $\rho$ is the standard deviation.
+
+### Task 2: Compute the Z-Score and percentile (with table)
+
+[Add hw]
+
+### Task 3: Re-do task 2 using the function `pnorm`
+
+
+### Task 4: Test out the `xpnorm` funtion to plot normal distributions
+
+---
+
+### Task 5. Knit your code and check your outcomes.
+
+You are only allowed to upload pdf or html
+
+### Share your work and help your group members before uploading your work to Canvas

@@ -11,7 +11,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Math 2265 Chatch-up
+## Math 2265 Catch-up
 
 - Work as a group!
 - You will need to replace `"ans"` or `your_answer` in the source code or answer questions

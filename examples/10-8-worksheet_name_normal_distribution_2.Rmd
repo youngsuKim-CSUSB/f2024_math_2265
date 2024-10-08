@@ -230,7 +230,7 @@ You are only allowed to upload pdf or html
 for Task 4
 
 ```{r}
-if(p_sd2==0.9544997) {
+if(p_sd2-0.9544997<0.00005) {
   print("Your answer is correct")
 } else {
   print("Check your answer")

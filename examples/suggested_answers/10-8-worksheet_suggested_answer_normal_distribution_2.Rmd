@@ -41,12 +41,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Load Packages
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include=FALSE}
 library(openintro)
 #library(ggplot2)
-if (!tinytex::is_tinytex()) {
-  tinytex::install_tinytex()
-} # this ensures the necessary package is installed for knit to pdf
+#if (!tinytex::is_tinytex()) {
+#  tinytex::install_tinytex()
+#} # this ensures the necessary package is installed for knit to pdf
 library(tinytex)  # to knit to PDF
 library(mosaic)
 set.seed(2265)
@@ -77,32 +77,31 @@ $$
 (a) Z = -1.1
 
 ```{r}
-pnorm(your_answer, mean = 0, sd = 1)
+pnorm(-1.1, mean = 0, sd = 1)
 ```
 
 In terms of the formula, 
 $$
-P(Z yourAnswer ) = yourAnswer
+P(Z < -1.1 ) = 0.1356661
 $$
-
 (b) Z = 0.35
 
 ```{r}
-pnorm(your_answer, mean = 0, sd = 1)
+pnorm(0.35, mean = 0, sd = 1)
 ```
 In terms of the formula, 
 $$
-P(Z yourAnswer) = yourAnswer
+P(Z < 0.35) = 0.6368307
 $$
 
 (c) Do you remember how to compute $P(Z > 0.5)$?
 
 ```{r}
-1 - pnorm(your_answer, mean = 0, sd = 1)
+1 - pnorm(0.5, mean = 0, sd = 1)
 ```
 In terms of the formula, 
 $$
-P(Z > 0.5) = yourAnswer
+P(Z > 0.5) = 0.3085375
 $$
 
 ### Example 2: Z-scores from Percentages
@@ -111,6 +110,7 @@ What is the Z-score for the 80th percentile with mean = 0 and standard deviation
 
 We need to find the Z-score z such that $P(Z < z) = 0.8$, where $0.8 = 80/100$. 
 We can use the `qnorm` function. The syntax is the same as `pnorm` but the first 
+
 argument (parameter) is the percentile instead of the Z-score.
 
 ```{r}
@@ -124,26 +124,26 @@ We can check it with `pnorm`.
 ```{r}
 pnorm(0.8416212, mean = 0, sd = 1)
 ```
-
 ### Task 2:
 
 (a) Fine the Z-score for 13.57 percentile.
 
 ```{r}
-qnorm(your_answer, mean = 0, sd = 1)
+qnorm(0.1357, mean = 0, sd = 1)
 ```
 That is (with marginal error), 
 $$
-P(Z < yourAnswer) = 0.1357
+P(Z < -1.099844) = 0.1357
 $$
+
 (b) Fine the Z-score for 63.68 percentile.
 
 ```{r}
-qnorm(your_answer, mean = 0, sd = 1)
+qnorm(0.6368, mean = 0, sd = 1)
 ```
 That is (with marginal error), 
 $$
-P(Z < yourAnswer) = 0.6368
+P(Z < 0.3499183) = 0.6368
 $$
 ### Example 3: arbitrary mean and standard deviation
 
@@ -168,7 +168,6 @@ This process can be combined as
 ```{r}
 pnorm(98, mean = 92.6, sd = 3.6)
 ```
-
 When $x=89$, the Z-score is -1, the percentile was (approximately) 0.16. 
 
 ```{r}
@@ -182,7 +181,7 @@ p_89
 Complete the code to compute the percentile for $x=89$.
 
 ```{r}
-pnorm(your_answer, mean = your_answer, sd = your_answer)
+pnorm(89, mean = 92.6, sd = 3.6)
 ```
 
 ---
@@ -214,7 +213,7 @@ $$
 
 ```{r}
 # There are a few different ways to compute it
-p_sd2 <- ...pnorm...   
+p_sd2 <- pnorm(2)-pnorm(-2)
 p_sd2
 ```
 This output should be close to 0.95.

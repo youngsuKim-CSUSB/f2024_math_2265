@@ -1,0 +1,366 @@
+---
+title: "More x 2 on Normal Distributions"
+author: "your name"
+date: "2024-10-10"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Math 2265 Sec 4.1 Normal Distribution Part III
+
+- Work as a group!
+- You will need to replace `"ans"` or `your_answer` in the source code or answer questions
+- Update your name in L3
+- Add your group members' name below; students may lose one point if Q0 is unanswered 
+- Make sure you save and `knit` your work (to html or pdf) before submitting it to Canvas
+
+---
+
+### Goal
+
+- Learn the function that computes the percentile from given x or its Z-score.
+- Learn the function that computes x or its Z-score or from given percentile.
+- Master the functions `pnorm` and `qnorm`.
+
+**Remark:**
+- These processes are inverses to each other and understanding graphs (regions) is beneficial. 
+- The Z-score is a way to transform any normal distribution to the standard normal distribution $\mu = 0$ and $\sigma = 1$.
+
+---
+
+### Question 0. Who are your group members? (List their first names should be sufficient)
+
+**Answer:** 
+
+  1. `<name_1>`
+  1. `<name_2>`
+
+### Load Packages
+
+```{r, echo=FALSE}
+library(openintro)
+#library(ggplot2)
+if (!tinytex::is_tinytex()) {
+  tinytex::install_tinytex()
+} # this ensures the necessary package is installed for knit to pdf
+library(tinytex)  # to knit to PDF
+library(mosaic)
+set.seed(2265)
+```
+
+---
+
+### If you need more time to get used to `Markdown`, use the `Visual` mode.
+
+The icon is located in the upper-left corner next to `source`. 
+
+---
+
+### Example 1: Visualizing percentiles in the normal distribution with `xpnorm`
+
+(a) P(Z < -1.1)
+
+```{r}
+xpnorm(-1.1, mean = 0, sd = 1)
+```
+
+(b) P(Z < 0.35)
+
+```{r}
+xpnorm(0.35, mean = 0, sd = 1)
+```
+
+(c) P(Z > 0.5)
+
+```{r}
+xpnorm(0.5, mean = 0, sd = 1)
+```
+
+Caveat: `xpnorm` computes both P(Z<0.5) and P(Z>0.5).
+
+(d) P(|Z| < 2) = P ( -2 < Z < 2)
+
+```{r}
+xpnorm(c(-2,2), mean = 0, sd = 1)
+```
+
+Caveat: This does not compute P( |Z| < 2), but P(Z<-2) and P(Z<2) for -2, 2.
+
+
+
+### Example 2: Visualizing percentiles in normal distributions with `xpnorm`
+
+(a) x = 98, $\mu = 92.6$, $\sigma = 3.6$
+
+```{r}
+xpnorm(98, mean=92.6, sd=3.6)
+```
+Note that the Z-score, 1.5, is computed. 
+
+(b) x = 89, $\mu = 92.6$, $\sigma = 3.6$
+
+```{r}
+xpnorm(89, mean=92.6, sd=3.6)
+```
+
+### Example 2: Z-scores from Percentages
+
+What is the Z-score for the 80th percentile with mean = 0 and standard deviation = 1?
+
+We need to find the Z-score z such that $P(Z < z) = 0.8$, where $0.8 = 80/100$. 
+We can use the `qnorm` function. The syntax is the same as `pnorm` but the first 
+argument (parameter) is the percentile instead of the Z-score.
+
+```{r}
+qnorm(0.8, mean = 0, sd = 1)
+```
+
+Now check out the output of `xqnorm`.
+
+```{r}
+xqnorm(0.8, mean = 0, sd = 1)
+```
+---
+
+####
+### Speeding on the I-5 Freeway
+
+---
+title: "Speeding on the I-5 Freeway"
+output: html_document
+---
+
+The distribution of passenger vehicle speeds traveling on the Interstate 5 Freeway (I-5) in California is nearly normal with:
+
+- Mean speed ($\mu$): 72.6 miles/hour
+- Standard deviation ($\sigma$): 4.78 miles/hour
+
+### (a) What percent of passenger vehicles travel slower than 80 miles/hour?
+
+First, compute the Z-score for $x = 80$:
+
+```{r}
+z_80 <- (80 - 72.6) / 4.78
+z_80
+```
+
+Now, compute the percentile using the standard normal distribution:
+
+```{r}
+p_80 <- pnorm(z_80, mean = 0, sd = 1)
+p_80
+```
+
+Alternatively, you can compute the percentile directly without calculating the Z-score:
+
+```{r}
+p_80_direct <- pnorm(80, mean = 72.6, sd = 4.78)
+p_80_direct
+```
+
+<!-- Answer: Approximately 93.94% of passenger vehicles travel slower than 80 miles/hour. -->
+
+### (b) What percent of passenger vehicles travel between 60 and 80 miles/hour?
+
+Alternatively, compute directly without Z-scores:
+
+```{r}
+p_60_direct <- pnorm(60, mean = 72.6, sd = 4.78)
+p_60_direct
+```
+
+Compute the percentage:
+
+```{r}
+percent_between_direct <- (p_80_direct - p_60_direct) * 100
+round(percent_between_direct, 2)
+```
+
+<!-- Answer: Approximately 93.48% of passenger vehicles travel between 60 and 80 miles/hour. -->
+
+### (c) How fast do the fastest 5% of passenger vehicles travel?
+
+We need to find the speed corresponding to the 95th percentile (since the fastest 5% are above this speed).
+
+Compute the speed using the inverse normal distribution function `qnorm`:
+
+```{r}
+speed_95th <- qnorm(0.95, mean = 72.6, sd = 4.78)
+round(speed_95th, 2)
+```
+
+<!-- Answer: The fastest 5% of passenger vehicles travel faster than 80.48 miles/hour. -->
+
+### (d) Approximate what percentage of the passenger vehicles travel above the speed limit of 70 miles/hour.
+
+Compute the Z-score for $x = 70$:
+
+```{r}
+z_70 <- (70 - 72.6) / 4.78
+z_70
+```
+
+Compute the cumulative probability up to 70 miles/hour:
+
+```{r}
+p_70 <- pnorm(z_70, mean = 0, sd = 1)
+p_70
+```
+
+Alternatively, compute directly:
+
+```{r}
+p_70_direct <- pnorm(70, mean = 72.6, sd = 4.78)
+p_70_direct
+```
+
+Compute the percentage of vehicles traveling above 70 miles/hour:
+
+```{r}
+percent_above_70 <- (1 - p_70) * 100
+round(percent_above_70, 2)
+```
+
+<!-- Answer: Approximately 70.66% of passenger vehicles travel above the speed limit of 70 miles/hour. -->
+
+### Task
+
+Complete the code to compute the percentile for $x = 70$.
+
+```{r}
+pnorm(your_answer, mean = your_answer, sd = your_answer)
+```
+
+### Solution:
+
+To compute the percentile for $x = 70$ using the direct method:
+
+```{r}
+pnorm(70, mean = 72.6, sd = 4.78)
+```
+
+Alternatively, using the Z-score:
+
+First, calculate the Z-score:
+
+```{r}
+z_70 <- (70 - 72.6) / 4.78
+```
+
+Then, compute the percentile:
+
+```{r}
+pnorm(z_70, mean = 0, sd = 1)
+```
+
+Summary of Results
+
+Question	Answer
+(a) Percent traveling slower than 80 mph	93.94%
+(b) Percent traveling between 60 and 80 mph	93.48%
+(c) Speed of the fastest 5% of vehicles	Above 80.48 mph
+(d) Percent traveling above the speed limit of 70 mph	70.66%
+
+Note: All percentages are rounded to two decimal places as requested.
+
+Additional Visualization (Optional)
+
+### Example 3: arbitrary mean and standard deviation
+
+- As some of you may have guessed, both `pnorm` and `qnorm` can be used with arbitrary mean and standard deviation. 
+- In this case, they internally compute the Z-score from given x and vice versa. 
+- For the purpose of Math 2265, students are expected to know how conversion works both ways (x to Z-score and Z-score to x); the sec 4.1 video (second part) explains how to do this.
+
+### Revisiting the possums example.
+
+The possums example in the video follows the normal distribution with mean 92.6 and sd 3.6. 
+
+When $x=98$, the Z-score is 1.5. With `pnorm`, we computed the percentile (approximately) 0.9331
+
+```{r}
+z_98 <- (98-92.6)/3.6
+p_98 <- pnorm(z_98, mean = 0, sd = 1)
+p_98
+```
+
+This process can be combined as 
+
+```{r}
+pnorm(98, mean = 92.6, sd = 3.6)
+```
+
+When $x=89$, the Z-score is -1, the percentile was (approximately) 0.16. 
+
+```{r}
+z_89 <- (89-92.6)/3.6
+p_89 <- pnorm(z_89, mean = 0, sd = 1)
+p_89
+```
+
+### Task 3
+
+Complete the code to compute the percentile for $x=89$.
+
+```{r}
+pnorm(your_answer, mean = your_answer, sd = your_answer)
+```
+
+---
+
+- We will cover exercises with `qnorm` next time, but it should be enough for up to Q6 in HW4. 
+- Also, we will use `xpnorm` to visualize today's code. 
+
+---
+
+### Example 68-95-99.7% Rule
+
+- The percentage within one standard deviation is 68%,
+- The percentage within two standard deviations is 95%
+- The percentage within three standard deviations is 99.7% 
+
+The percentage within one standard deviation is 68% means 
+$$
+P( |Z| < 1) = P ( -1 < Z < 1) = 0.68
+$$
+So, 
+$$
+P( |Z| < 2) = 0.95
+$$
+$$
+P( |Z| < 3) = 0.997
+$$
+
+### Task 4: Compute $P ( |Z| < 2 )$ using `pnorm`. 
+
+```{r}
+# There are a few different ways to compute it
+p_sd2 <- ...pnorm...   
+p_sd2
+```
+This output should be close to 0.95.
+
+---
+
+### Task 6. Knit your code and check your outcomes.
+
+You are only allowed to upload pdf or html
+
+### Task 7. Check your answer 
+
+for Task 4
+
+```{r}
+if(p_sd2-0.9544997<0.00005) {
+  print("Your answer is correct")
+} else {
+  print("Check your answer")
+}
+```
+
+
+### Share your work and help your group members before uploading your work to Canvas

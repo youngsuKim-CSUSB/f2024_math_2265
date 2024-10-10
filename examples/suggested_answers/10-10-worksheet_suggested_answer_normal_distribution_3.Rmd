@@ -3,8 +3,8 @@ title: "More more on Normal Distributions"
 author: "your name"
 date: "2024-10-10"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -41,9 +41,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, echo=FALSE, include=FALSE}
 library(openintro)
 library(ggplot2)
-if (!tinytex::is_tinytex()) {
-  tinytex::install_tinytex()
-} # this ensures the necessary package is installed for knit to pdf
+#if (!tinytex::is_tinytex()) {
+#  tinytex::install_tinytex()
+#} # this ensures the necessary package is installed for knit to pdf
 library(tinytex)  # to knit to PDF
 library(mosaic)
 set.seed(2265)

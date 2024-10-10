@@ -136,7 +136,7 @@ The distribution of passenger vehicle speeds traveling on the Interstate 5 Freew
 First, compute the Z-score for $x = 80$:
 
 ```{r}
-z_80 <- (your_answer - your_answer) / your_answer
+z_80 <- (80 - 72.6) / 4.78
 z_80
 ```
 
@@ -150,7 +150,7 @@ p_80
 Alternatively, you can compute the percentile directly without calculating the Z-score:
 
 ```{r}
-p_80_direct <- pnorm(your_answer, mean = 72.6, sd = 4.78)
+p_80_direct <- pnorm(80, mean = 72.6, sd = 4.78)
 p_80_direct
 ```
 
@@ -159,7 +159,7 @@ p_80_direct
 First, compute the Z-score for $x = 80$:
 
 ```{r}
-z_60 <- (your_answer - your_answer) / your_answer
+z_60 <- (80 - 72.6) / 4.78
 z_60
 ```
 
@@ -173,7 +173,7 @@ p_60
 Alternatively, compute directly without Z-scores:
 
 ```{r}
-p_60_direct <- pnorm(your_answer, mean = 72.6, sd = 4.78)
+p_60_direct <- pnorm(60, mean = 72.6, sd = 4.78)
 p_60_direct
 ```
 
@@ -181,7 +181,6 @@ Compute the percentile (we already computed `p_80_direct` above).
 
 ```{r}
 p_80_direct - p_60_direct
-# p_80-p_60
 ```
 
 ### (c) How fast do the fastest 5% of passenger vehicles travel?
@@ -191,7 +190,7 @@ We need to find the speed corresponding to the 95th percentile (since the fastes
 Compute the speed using the inverse normal distribution function `qnorm`:
 
 ```{r}
-speed_95th <- qnorm(your_answer, mean = 72.6, sd = 4.78)
+speed_95th <- qnorm(0.95, mean = 72.6, sd = 4.78)
 speed_95th
 ```
 
@@ -200,7 +199,7 @@ speed_95th
 Compute the Z-score for $x = 70$:
 
 ```{r}
-z_70 <- (your_answer - your_answer) / your_answer
+z_70 <- (70 - 72.6) / 4.78
 z_70
 ```
 
@@ -214,7 +213,7 @@ p_70
 Alternatively, compute directly:
 
 ```{r}
-p_70_direct <- pnorm(your_answer, mean = 72.6, sd = 4.78)
+p_70_direct <- pnorm(70, mean = 72.6, sd = 4.78)
 p_70_direct
 ```
 

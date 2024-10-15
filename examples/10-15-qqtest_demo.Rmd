@@ -1,0 +1,59 @@
+---
+title: "qq-test demo"
+author: "your name"
+date: "2024-10-15"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Load Packages
+
+```{r, echo=FALSE, include=FALSE}
+library(openintro)
+library(ggplot2)
+#if (!tinytex::is_tinytex()) {
+#  tinytex::install_tinytex()
+#} # this ensures the necessary package is installed for knit to pdf
+library(tinytex)  # to knit to PDF
+library(mosaic)
+set.seed(2265)
+```
+
+
+```{r}
+normal_data <- rnorm(n = 1000, mean = 50, sd = 10)
+qqnorm(normal_data, main = "Q-Q Plot for Generated Normal Data")
+qqline(normal_data, col = "red")
+```
+
+```{r}
+ggplot(data=cpu, aes(x=threads)) + geom_histogram()
+qqnorm(cpu$threads, main = "Q-Q Plot for Thread Variable")
+qqline(cpu$threads, col = "red")
+# Shapiro-Wilk test for the generated normal data
+# shapiro.test(normal_data)
+```
+
+```{r}
+ggplot(data=mlb_players_18, aes(x=games)) + geom_histogram()
+qqnorm(mlb_players_18$games, main = "Q-Q Plot for Thread Variable")
+qqline(mlb_players_18$games, col = "red")
+```
+
+```{r}
+ggplot(data=babies, aes(x=age)) + geom_histogram()
+qqnorm(babies$age, main = "Q-Q Plot for Thread Variable")
+qqline(babies$age, col = "red")
+```
+
+```{r}
+ggplot(data=births14, aes(x=weight)) + geom_histogram()
+qqnorm(births14$weight, main = "Q-Q Plot for Thread Variable")
+qqline(births14$weight, col = "red")
+
+```

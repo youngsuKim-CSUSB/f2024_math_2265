@@ -1,5 +1,5 @@
 ---
-title: "Line plot basics"
+title: "Line Plot Basics"
 author: "your name"
 date: "2024-10-22"
 output:
@@ -44,7 +44,7 @@ set.seed(2265)
 
 ---
 
-### Question 0. Who are your group members? (List their first names should be sufficient)
+### Question 0. Who are your group members? (List their first names)
 
 **Answer:** 
 
@@ -61,12 +61,12 @@ The icon is located in the upper-left corner next to `source`.
 
 ## Functions
 
-Roughly speaking, a function is an assignment that for each value of $x$, there is exactly one output $y$. 
-Often they are denoted by $f(x) = 	\text{expression in } x$ or $y = 	\text{expression in } x$.
+Roughly speaking, a function $f$ is an assignment that for each value of $x$, there is exactly one output value $y$ by the assignment $f(x)$. 
+Often they are denoted by $f(x) = \text{expression in } x$ or $y = \text{expression in } x$.
 
 Here are some examples of functions.
 
-Linear:
+Linear (line):
 
 1. $f(x) = x$
 2. $f(x) = -3x + 1$
@@ -78,7 +78,7 @@ Quadratic:
 
 ### Example 1: Compute the $y$ values of a given function
 
-We will use $f(x) = -3x+1$ as an example but it applies to any function. 
+We will use $f(x) = -3x+1$ as an example, but it applies to any function. 
 Below, we compute $f(1), f(2), f(3)$. 
 
 ```{r}
@@ -93,11 +93,11 @@ Below, we compute $f(1), f(2), f(3)$.
 -3*(3) + 1
 ```
 
-Indeed, it is often desired and convenient to use vectors. 
+Indeed, it is often desired and convenient to use a vector. 
 
 ```{r}
-inputs <- c(1,2,3)
--3*inputs + 1
+inputs <- c(1,2,3) # define a vector consisting of inputs
+-3*inputs + 1      # compute all of them
 ```
 
 ### Task 1: Do the same for $f(x) = -(x-3)^2 + 5$
@@ -126,15 +126,15 @@ inputs <- c(1,2,3)
 
 ### Example 2: Define a function
 
-Let's revisit Example 1, where $f(x) = -3x+1$. This time we will define the function $f(x)$ first and use it to compute the rest.
+Let's revisit Example 1, where $f(x) = -3x+1$. This time we will define the function $f(x)$ first, and use it to compute the rest.
 
 ```{r}
 #define f(x) = -3x + 1
 my_func <- function(x){
-  -3*x + 1 # be sure to put * to denote multiplication
+  -3*x + 1 # be sure to put * for multiplication
 }
 
-my_func(1); my_func(2); my_func(3)
+my_func(1); my_func(2); my_func(3) # f(1); f(2); f(3)
 ```
 
 ```{r}
@@ -146,6 +146,8 @@ my_func(inputs)
 
 ```{r}
 my_func2 <- function(x) {
+  # write your answer below
+  # your_answer
   -(x - 3)^2 + 5
 }
 
@@ -160,29 +162,30 @@ my_func2(inputs)
 ```
 
 
-### Example 3: Plot the line $f(x) = 3x -1$
+### Example 3: Plot the line $f(x) = 3x-1$
 
 We use the function `my_func` defined above to plot the line $f(x) = 3x-1$. 
 First we make a scatter plot, and then we add a line. To use `ggplot2`, 
-we need to make a data frame consisting of $x$ and $y$. 
+we need to make a data frame consisting of two variables $x$ and $y$. 
 
 ```{r}
-x <- c(-10:10)                     # c(-10:10) creates a vector -10,-9,..,10
-y <- my_func(x)
+x <- c(-10:10)                # c(-10:10) creates a vector consisting of -10,-9,..,10
+y <- my_func(x)               # compute y values from x values
 my_dataframe <- data.frame(
   x,
   y
 )
-str(my_dataframe)
+str(my_dataframe)             
 ```
 
-First make a scatter plot:
+First we make a scatter plot:
 
 ```{r}
 ggplot(data=my_dataframe, mapping = aes(x=x, y=y)) +
   geom_point()
 ```
-We can connect the dots by adding `geom_line()`:
+
+We connect the dots by adding `geom_line()`:
 
 ```{r}
 ggplot(data=my_dataframe, mapping = aes(x=x, y=y)) +
@@ -195,12 +198,12 @@ Indeed, there is a function `curve` which sketches the function `f(x)` without n
 ```{r}
 curve(my_func, from=-10,to=10)
 ```
+
 ```{r}
-curve(-(x-3)^2 +5, from=-7,to=13)
+curve(my_func2, from=-7,to=13)
 ```
-However, for the purpose of linear regression, we will stick to the `ggplot2` package. 
-For lines, the `ggplot2` package has the `abline` function which takes the slope and intercept of a line as parameters. 
-Here is an example for $f(x) = -3x + 1$ whose slope is $-3$ and $y$-intercept is $1$. 
+
+However, for the purpose of linear regression, we will stick to the `ggplot2` package. For lines, the `ggplot2` package has the `abline` function which takes the slope and intercept of a line as parameters. Here is an example for $f(x) = -3x + 1$ whose slope is $-3$ and $y$-intercept is $1$. 
 
 ```{r}
 ggplot() +
@@ -211,9 +214,16 @@ ggplot() +
 
 ### Question:
 
-We will create the possum example in the book [link](https://www.openintro.org/data/index.php?data=possum). 
+```{r, include=FALSE}
+# Run this to download the scatter plot and line image
+url <- "https://github.com/youngsuKim-CSUSB/f2024_math_2265/raw/linear_regression/examples/images/possum_lm_example.png"
+destfile <- "possum_lm_example.png"  
+download.file(url, destfile, mode = "wb")
+```
 
-![example](./images/possum_lm_example.png). 
+We will create the possum example in the textbook [link](https://www.openintro.org/data/index.php?data=possum):
+
+![example](./possum_lm_example.png)
 
 - **data set**: `possum`
 - **explanatory variable**: `total_l`
@@ -237,15 +247,16 @@ ggplot(data = possum, mapping = aes(x=total_l, y=head_l)) +
 ### (c) Decorations
 
 We have not been concerned aesthetics so far, but with the a few commands we can make it look similar 
-to the one in the book. Change `red` to the matching color and "x_title" and "y_title" by "Total Length (cm)" and "Head Length (mm)", respectively. 
-
+to the one in the book. For instance, change `red` to `blue` and lower the alpha value. Also change "x_title" and "y_title" by "Total Length (cm)" and "Head Length (mm)", respectively. 
 
 ```{r}
 ggplot(data = possum, mapping = aes(x=total_l, y=head_l)) +
-  geom_point(color='red') +
+  geom_point(color='red', alpha = 1) +
   geom_abline(slope = 0.59, intercept = 41) +
   xlab("Total Length (cm)") + 
   ylab("Head Length (mm)")
 ```
+
+That's all for today! We will learn how to fit lines and find $R$ next time. 
 
 ### Share your work and help your group members before uploading your work to Canvas

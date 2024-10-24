@@ -175,8 +175,8 @@ sample_y <- possum$head_l[some_number]
 ggplot(data = possum, mapping = aes(x=total_l, y=head_l)) +
   geom_point(color='blue', alpha = 0.6) +
   geom_abline(slope = 0.59, intercept = 41) +
-  # 
-  geom_abline(slope = 0.5729, intercept = 42.7098, color = 'hotpink') +
+  # put your answers below
+  geom_abline(slope = your_answer, intercept = your_answer, color = 'hotpink') +
   xlab("Total Length (cm)") + 
   ylab("Head Length (mm)")
 ```

@@ -1,0 +1,162 @@
+---
+title: "Linear Regression Basics"
+author: "your name"
+date: "2024-10-24"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(openintro)
+library(ggplot2)
+if (!tinytex::is_tinytex()) {
+  latex_installed <- Sys.which("tlmgr") != ""
+  
+  if (!latex_installed) {
+    tinytex::install_tinytex()
+  } else {
+    message("A LaTeX distribution already exists on the system.")
+  }
+} # this ensures TinyTeX is installed only if no LaTeX distribution is found
+library(tinytex)  # to knit to PDF
+set.seed(2265)
+```
+
+## Math 2265 Chapter 8. Linear Regression
+
+- Work as a group!
+- You will need to replace `"ans"` or `your_answer` in the source code
+- Update your name in L3
+- Add your group members' name below; students may lose one point if Question 0 is unanswered
+- Make sure you save and `knit` your work (to html or pdf) before submitting it to Canvas
+
+---
+
+### Goal
+
+- Review the basic concepts in linear regression
+  - Meaning of line fitting
+    - Residuals
+  - The $R$-value
+  - When not to use linear regression
+    - Linearity
+    - Nearly normal residuals
+    - Constant variability
+    - Independent observations
+- Next time we will learn how to use an `R`-function to find the least squares line 
+
+---
+
+### Question 0. Who are your group members? (List their first names)
+
+**Answer:** 
+
+  1. `<name_1>`
+  1. `<name_2>`
+
+---
+
+### If you need more time to get used to `Markdown`, use the `Visual` mode.
+
+The icon is located in the upper-left corner next to `source`. 
+
+---
+
+## Line fitting
+
+We will use the possums [data set](https://www.openintro.org/data/index.php?data=possum):
+
+### Question:
+
+```{r, include=FALSE, error=TRUE}
+# Run this to download the scatter plot and line image
+url <- "https://github.com/youngsuKim-CSUSB/f2024_math_2265/raw/linear_regression/examples/images/possum_lm_example.png"
+destfile <- "possum_lm_example.png"  
+download.file(url, destfile, mode = "wb")
+```
+
+![example](./possum_lm_example.png)
+
+- **data set**: `possum`
+- **explanatory variable**: `total_l`
+- **response variable**: `head_l`
+
+Here is the scatter plot of the data.
+
+
+```{r}
+# We define the function of the line and use `_hat` since it is an estimate 
+y_hat <- function(x) {
+  41 + 0.59 * x 
+}
+
+# We choose one sample point to demonstrate the residual
+some_number = 53 # try different numbers between 1 and 104
+possum$total_l[some_number]
+sample_x <- possum$total_l[some_number]
+sample_y <- possum$head_l[some_number]
+
+ggplot(data = possum, mapping = aes(x=total_l, y=head_l)) +
+  geom_point(color='blue', alpha = 0.6) +
+  geom_abline(slope = 0.59, intercept = 41) +
+  # the following line draws the residual in red
+  geom_line(data = data.frame(x = c(sample_x, sample_x), y = c(sample_y, y_hat(sample_x))), aes(x = x, y = y, colour = 'red')) +
+  xlab("Total Length (cm)") + 
+  ylab("Head Length (mm)")
+```
+Computing residuals with respect to this line $y = 41 + 0.59x$ is fairly simple. Recall that the residual is the true value of $y$ minus the estimation $\hat{y}$.
+
+The explanatory variable `total_l` plays the role of $x$, and the response variable `head_l` plays the role of $y$. Let's check these two variables first.
+
+```{r}
+library(dplyr)
+possum %>% select(total_l, head_l)
+```
+
+We will add another column `head_l_hat` containing the estimations by using the line. 
+
+```{r}
+possum$head_l_hat <- y_hat(possum$total_l)
+head(possum$head_l_hat)
+```
+
+Now we display the three columns. 
+
+```{r}
+# if you see an error, run library(dplyr) first
+# library(dplyr)
+possum %>% select(total_l, head_l, head_l_hat)
+```
+The residual for each point is the value of head_l minus head_l_hat. The vector calculation takes care of it. We will compute it, attach it to the data frame, and display the four columns.
+
+```{r}
+# if you see an error, run the previous cell first
+possum$residuals <- possum$head_l - possum$head_l_hat
+possum %>% select(total_l, head_l, head_l_hat, residuals)
+```
+The positive residuals mean that the points are lying above the line, and the negative residuals mean the points are below the line. The `least squares` line means that the sum of squares of the residuals is the least among all possible line fittings. In this example, the value is
+
+```{r}
+sum_squares <- sum( (possum$residuals)^2 )
+sum_squares
+```
+
+The calculation below demonstrates that this actually is not the least squares line. 
+
+Lastly, we can compute the $R$-value (the correlation factor) using the function `cor`. 
+
+```{r}
+r <- cor(possum$total_l, possum$head_l, method = "pearson")
+r; r^2 # R and R^2
+```
+
+### Next time
+
+```{r}
+model <- lm(head_l ~ total_l, data = possum)
+summary(model)
+```
+
+### Share your work and help your group members before uploading your work to Canvas

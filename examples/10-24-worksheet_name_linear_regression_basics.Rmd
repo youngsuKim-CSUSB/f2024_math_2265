@@ -153,6 +153,7 @@ model <- lm(head_l ~ total_l, data = possum)
 print(sum( residuals(model)^2))
 summary(model)
 ```
+
 ---
 
 ### Question:

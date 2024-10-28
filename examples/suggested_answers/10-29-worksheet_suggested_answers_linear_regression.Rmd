@@ -65,120 +65,165 @@ The icon is located in the upper-left corner next to `source`.
 
 ---
 
-## Line fitting
-
-We will use the possums [data set](https://www.openintro.org/data/index.php?data=possum): 
-
-|![example](./possum_lm_example.png)|
-|-|
-
-- **data set**: `possum`
-- **explanatory variable**: `total_l`
-- **response variable**: `head_l`
-
-Below, we define the line $y = 41 + 0.59x$ as a function first then make a scatter plot with the line and a residual.
+### Correlation factor R
 
 ```{r}
-# We define the function of the line and use `_hat` since it is an estimate 
-y_hat <- function(x) {
-  41 + 0.59 * x 
+# Set seed for reproducibility
+set.seed(0)
+
+# Initialize data frame with a single column of random values
+df <- data.frame(x = rnorm(100))
+
+# Function to generate data with a specified correlation
+generate_correlated_data <- function(x, r) {
+  y <- r * x + sqrt(1 - r^2) * rnorm(length(x))
+  return(y)
 }
 
-# We choose one sample point to demonstrate the residual
-some_number = 53 # try different numbers between 1 and 104
-possum$total_l[some_number]
-sample_x <- possum$total_l[some_number]
-sample_y <- possum$head_l[some_number]
+# Target correlations
+target_correlations <- c(0.33, 0.69, 0.98, 1.00, 0.08, -0.64, -0.92, -1.00)
+# target_correlations <- sample(target_correlations, 4)
 
-ggplot(data = possum, mapping = aes(x=total_l, y=head_l)) +
-  geom_point(color='blue', alpha = 0.6) +
-  geom_abline(slope = 0.59, intercept = 41) +
-  # the following line draws the residual in red
-  geom_line(data = data.frame(x = c(sample_x, sample_x), y = c(sample_y, y_hat(sample_x))), aes(x = x, y = y, colour = 'red')) +
-  xlab("Total Length (cm)") + 
-  ylab("Head Length (mm)")
+# Loop over each target correlation and add as a new column in df
+for (r in target_correlations) {
+  # Use the exact correlation value, including sign, in the column name
+  col_name <- paste0("r_", gsub("\\.", "", as.character(r * 100)))
+  df[[col_name]] <- generate_correlated_data(df$x, r)
+}
+
+# View the resulting data frame
+head(df)
+
+# Save the data frame to a file
+write.csv(df, "correlated_datasets.csv", row.names = FALSE)
 ```
-
-Computing residuals with respect to this line $y = 41 + 0.59x$ is fairly simple. Recall that the residual is the true value of $y$ minus the estimation $\hat{y}$. The explanatory variable `total_l` plays the role of $x$, and the response variable `head_l` plays the role of $y$. Let's check these two variables first.
 
 ```{r}
-library(dplyr)
-possum %>% select(total_l, head_l)
+# Load necessary libraries
+library(ggplot2)
+library(gridExtra)
+
+# Read the combined data from the CSV file
+df <- read.csv("correlated_datasets.csv")
+
+target_correlations <- sample(c(2:9),4)
+
+counter <- 1
+
+# Loop over the selected column positions
+for (i in target_correlations) {
+  # Dynamically create variable name like df2, df3, etc., based on the column position
+  var_name <- paste0("df", counter)
+  
+  # Assign the data frame to the dynamically created variable name
+  assign(var_name, data.frame(x = df$x, y = df[, i]))
+  counter <- counter + 1
+
+}
+
+# Check the created data frames
+ls(pattern = "^df[0-9]+$")
+
+# Load necessary libraries
+library(ggplot2)
+library(gridExtra)
+
+# Initialize a list to store the plots
+plots <- list()
+
+# Loop through the four data frames (df1, df2, df3, and df4)
+for (i in 1:4) {
+  # Dynamically get each data frame by name
+  df_name <- paste0("df", i)
+  data <- get(df_name)
+  
+  # Create the scatter plot
+  p <- ggplot(data, aes(x = x, y = y)) +
+    geom_point(alpha = 0.6) +
+    labs(title = df_name,
+         x = "X",
+         y = "Y") +
+    coord_fixed() +  # Maintain a 1:1 aspect ratio
+    theme_minimal()
+  
+  # Store the plot in the list
+  plots[[i]] <- p
+}
+
+# Arrange all four plots in a single row
+grid.arrange(grobs = plots, ncol = 4)
 ```
+### Question
 
-We will add another column `head_l_hat` containing the estimations by using the line. 
+Without computing the R-values, list the data frames in the increasing order of their R-values
 
-```{r}
-# We compute the estimates and add it to as a column
-possum$head_l_hat <- y_hat(possum$total_l)
-head(possum$head_l_hat)
-```
+### Answer: "your_answer" 
 
-Now we display the three columns. 
-
-```{r}
-# if you see an error, run library(dplyr) first
-# library(dplyr)
-possum %>% select(total_l, head_l, head_l_hat)
-```
-
-The residual for each point is the value of head_l minus head_l_hat. The vector calculation comes in handy. We will compute it, attach it to the data frame, and display the four columns.
-
-```{r}
-# if you see an error, run the previous cell first
-possum$residuals <- possum$head_l - possum$head_l_hat
-possum %>% select(total_l, head_l, head_l_hat, residuals)
-```
-
-The positive residuals mean that the points are lying above the line, and the negative residuals mean the points are below the line. The `least squares` line means that the sum of squares of the residuals is the least among all possible line fittings. In this example, the value is
-
-```{r}
-sum_squares <- sum( (possum$residuals)^2 )
-sum_squares
-```
-
-Note: The line we computed above is not the actual least squares line. We’ll verify this by computing the sum of squares of the residuals and comparing it to the least squares regression model.
-
-Lastly, we can compute the $R$-value (the correlation factor) using the function `cor`. 
-
-```{r}
-r <- cor(possum$total_l, possum$head_l, method = "pearson")
-r; r^2 # R and R^2
-```
-
-### Next time
-
-```{r}
-model <- lm(head_l ~ total_l, data = possum)
-print(sum( residuals(model)^2))
-summary(model)
-```
 ---
 
-### Question:
-
-Add the line from the summary the the possum scatter plot.
-
+Here is an example of computing the R-value of `df1`. 
 
 ```{r}
-# We define the function of the line and use `_hat` since it is an estimate 
-y_hat <- function(x) {
-  41 + 0.59 * x 
-}
+cor_df1 <- cor(x = df1$x, y = df1$y)
+cor_df1
+```
 
-# We choose one sample point to demonstrate the residual
-some_number = 53 # try different numbers between 1 and 104
-possum$total_l[some_number]
-sample_x <- possum$total_l[some_number]
-sample_y <- possum$head_l[some_number]
+Compute the other R-values to confirm your answer.
 
-ggplot(data = possum, mapping = aes(x=total_l, y=head_l)) +
-  geom_point(color='blue', alpha = 0.6) +
-  geom_abline(slope = 0.59, intercept = 41) +
-  # 
-  geom_abline(slope = 0.5729, intercept = 42.7098, color = 'hotpink') +
-  xlab("Total Length (cm)") + 
-  ylab("Head Length (mm)")
+```{r}
+cor_df2 <- cor(x = df2$x, y = df2$y)
+cor_df3 <- cor(x = df3$x, y = df3$y)
+cor_df4 <- cor(x = df4$x, y = df4$y)
+c(cor_df1, cor_df2, cor_df3, cor_df4)
+```
+
+### Linear Regression (best fit line)
+
+We will use the function `lm` to find the best fitting line (use the first column for the intercept and slope), and sketch its graph. Here is an example for `df1`.
+
+```{r}
+model <- lm(y~x, data=df1)
+summary(model); print(paste("R-squared from cor:", cor_df1^2))
+```
+
+```{r}
+ggplot(data=df1, aes(x=x,y=y)) +
+  geom_point() +
+  geom_abline(intercept = -0.01505, slope = -0.59011, color='hotpink')
+```
+
+### Task 1
+
+Compute the sum of square residuals and save it to the variable `my_rss`: (Refer to the last worksheet)
+
+```{r} 
+your_code
+#
+my_rss <- your_answer
+```
+
+---
+
+### Task 2
+
+Find the best fitting line for `df2`, sketch the scatter plot and the line, and compute the sum of the square residuals.
+
+```{r}
+# linear model
+model2 <- lm(y~x, data = df2)
+summary(model2)
+```
+
+```{r}
+ggplot(data=df1, aes(x=x,y=y)) +
+  geom_point() +
+  geom_abline(intercept = -0.01505, slope = -0.59011, color='hotpink')
+```
+
+```{r} 
+your_code
+#
+my_rss2 <- your_answer
 ```
 
 ### Share your work and help your group members before uploading your work to Canvas

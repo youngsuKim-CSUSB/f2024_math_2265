@@ -24,6 +24,15 @@ library(tinytex)  # to knit to PDF
 set.seed(2265)
 ```
 
+This will download the dataset needed for this worksheet. If it does not work, notify the instructor.
+
+```{r, include=FALSE}
+# Run this to download the scatter plot and line image
+url <- "https://github.com/youngsuKim-CSUSB/f2024_math_2265/raw/linear_regression/examples/data/correlated_datasets.csv"
+destfile <- "correlated_datasets.csv"  
+download.file(url, destfile, mode = "wb")
+```
+
 ## Math 2265 Chapter 8. Linear Regression
 
 - Work as a group!
@@ -61,7 +70,9 @@ The icon is located in the upper-left corner next to `source`.
 
 ### Correlation factor R
 
-The following snippet loads four data sets into data frames `df1, df2, df3, df4`. Each data frame consisting of two variables $x$ and $y$. The varialbe $x$ is shared among the data frames. 
+The following snippet loads four data sets into data frames `df1, df2, df3, df4` (We do not need to understand the code as it is a bit involved). Each data frame consisting of two variables $x$ and $y$. The variable $x$ is shared among the data frames. 
+
+You may need to install the package `gridExtra`. Save the file and check the pop-up notification at the top of this edit box.
 
 ```{r}
 library(gridExtra)
@@ -106,13 +117,13 @@ grid.arrange(grobs = plots, ncol = 4)
 
 Without computing the R-values, list the data frames in the increasing order of their R-values.
 
-### Answer: "your_answer" 
+### Answer: "your_answer: list df1, df2, df3, df4 accordingly" 
 
 ---
 
 ### Computing the R-values
 
-Here is an example of computing the R-value of `df1`. Recall `$` is used to grab a variable (column).
+Here is an example of computing the R-value of `df1`. Recall `$` is used to grab a variable (column) by name.
 
 ```{r}
 cor_df1 <- cor(x = df1$x, y = df1$y)
@@ -127,12 +138,13 @@ Compute the other R-values to confirm your answer.
 cor_df2 <- cor(x = df2$x, y = df2$y)
 cor_df3 <- cor(x = df3$x, y = df3$y)
 cor_df4 <- cor(x = df4$x, y = df4$y)
+# display all four R values
 c(cor_df1, cor_df2, cor_df3, cor_df4)
 ```
 
 ### Linear Regression (best fit line)
 
-We will use the function `lm` to find the best fitting line (use the first column for the intercept and slope), and sketch its graph. Here is an example for `df1`.
+We will use the function `lm` to find the least squares line (the best fitting line): Use the first column for the intercept and slope and sketch its graph. Here is an example for `df1`.
 
 ```{r}
 model <- lm(y~x, data=df1)
@@ -142,23 +154,24 @@ summary(model); print(paste("R-squared from cor:", cor_df1^2))
 ```{r}
 ggplot(data=df1, aes(x=x,y=y)) +
   geom_point() +
-  geom_abline(intercept = -0.01505, slope = -0.59011, color='hotpink')
+  # you may also copy the numbers in the first column instead of using coef(model)[n]
+  geom_abline(intercept = coef(model)[1], slope = coef(model)[2], color='hotpink')
 ```
 
-### Example
+#### The sum of square residuals
 
-We will compute the sum of square residuals and save it to the variable `my_rss`. We learned a way in the last worksheet. The `lm` function provides a convenient way. 
+We will compute the sum of square residuals and save it to the variable `my_ssr`. We learned a way in the last worksheet. The `lm` function provides a convenient way. 
 
 ```{r} 
 # Computes the residuals of the least squares line
 residuals(model)
 ```
 
-It is a vector, so we need to take the sum of their squares. 
+It is a vector, so we need to take the sum of their squares with a couple of commands
 
 ```{r} 
-rss <- sum( (residuals(model))^2 )
-rss
+ssr <- sum( (residuals(model))^2 )
+ssr
 ```
 
 
@@ -175,20 +188,21 @@ summary(model2)
 ```
 
 ```{r}
-ggplot(data=df1, aes(x=x,y=y)) +
+ggplot(data=df2, aes(x=x,y=y)) +
   geom_point() +
-  geom_abline(intercept = -0.01505, slope = -0.59011, color='hotpink')
+  geom_abline(intercept = coef(model2)[1], slope = coef(model2)[2], color='hotpink')
 ```
 
 ```{r} 
-your_code
-#
-my_rss2 <- your_answer
+# write your code below
+
+
+my_ssr2 <- your_answer
 ```
 
-### Plotting residuals
+#### Plot residuals
 
-First save the residuals of `df3` as a variable 
+We will use `df3`. First save the residuals of `df3` as a variable 
 
 ```{r}
 model3 <- lm(y~x, data=df3)
@@ -199,10 +213,11 @@ df3$res <- residuals(model3)
 hist(df3$res)
 ```
 
+Does it follow normal distributions?
+
 ```{r}
 ggplot(data=df3, mapping = aes(x = x, y = res)) +
-  geom_point(color='blue') +
-  geom_point(data=df3, mapping = aes(x = x, y = y))
+  geom_point(color='blue')
 ```
 
 

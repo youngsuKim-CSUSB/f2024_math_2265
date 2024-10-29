@@ -40,12 +40,6 @@ set.seed(2265)
   - Meaning of line fitting
     - Residuals
   - The $R$-value
-- Next time we will learn/review
-  - When not to use linear regression
-    - Linearity
-    - Nearly normal residuals
-    - Constant variability
-    - Independent observations
   - how to use an `R`-function to find the least squares line 
 
 ---
@@ -67,70 +61,27 @@ The icon is located in the upper-left corner next to `source`.
 
 ### Correlation factor R
 
-```{r}
-# Set seed for reproducibility
-set.seed(0)
-
-# Initialize data frame with a single column of random values
-df <- data.frame(x = rnorm(100))
-
-# Function to generate data with a specified correlation
-generate_correlated_data <- function(x, r) {
-  y <- r * x + sqrt(1 - r^2) * rnorm(length(x))
-  return(y)
-}
-
-# Target correlations
-target_correlations <- c(0.33, 0.69, 0.98, 1.00, 0.08, -0.64, -0.92, -1.00)
-# target_correlations <- sample(target_correlations, 4)
-
-# Loop over each target correlation and add as a new column in df
-for (r in target_correlations) {
-  # Use the exact correlation value, including sign, in the column name
-  col_name <- paste0("r_", gsub("\\.", "", as.character(r * 100)))
-  df[[col_name]] <- generate_correlated_data(df$x, r)
-}
-
-# View the resulting data frame
-head(df)
-
-# Save the data frame to a file
-write.csv(df, "correlated_datasets.csv", row.names = FALSE)
-```
+The following snippet loads four data sets into data frames `df1, df2, df3, df4`. Each data frame consisting of two variables $x$ and $y$. The varialbe $x$ is shared among the data frames. 
 
 ```{r}
-# Load necessary libraries
-library(ggplot2)
 library(gridExtra)
 
-# Read the combined data from the CSV file
+# Read data from the CSV file
 df <- read.csv("correlated_datasets.csv")
 
+# We randomly choose 4 sets
 target_correlations <- sample(c(2:9),4)
 
-counter <- 1
-
 # Loop over the selected column positions
+counter <- 1
 for (i in target_correlations) {
-  # Dynamically create variable name like df2, df3, etc., based on the column position
   var_name <- paste0("df", counter)
-  
-  # Assign the data frame to the dynamically created variable name
   assign(var_name, data.frame(x = df$x, y = df[, i]))
   counter <- counter + 1
-
 }
 
-# Check the created data frames
-ls(pattern = "^df[0-9]+$")
 
-# Load necessary libraries
-library(ggplot2)
-library(gridExtra)
-
-# Initialize a list to store the plots
 plots <- list()
-
 # Loop through the four data frames (df1, df2, df3, and df4)
 for (i in 1:4) {
   # Dynamically get each data frame by name
@@ -140,33 +91,35 @@ for (i in 1:4) {
   # Create the scatter plot
   p <- ggplot(data, aes(x = x, y = y)) +
     geom_point(alpha = 0.6) +
-    labs(title = df_name,
-         x = "X",
-         y = "Y") +
+    labs(title = df_name) +
     coord_fixed() +  # Maintain a 1:1 aspect ratio
     theme_minimal()
   
-  # Store the plot in the list
   plots[[i]] <- p
 }
 
 # Arrange all four plots in a single row
 grid.arrange(grobs = plots, ncol = 4)
 ```
+
 ### Question
 
-Without computing the R-values, list the data frames in the increasing order of their R-values
+Without computing the R-values, list the data frames in the increasing order of their R-values.
 
 ### Answer: "your_answer" 
 
 ---
 
-Here is an example of computing the R-value of `df1`. 
+### Computing the R-values
+
+Here is an example of computing the R-value of `df1`. Recall `$` is used to grab a variable (column).
 
 ```{r}
 cor_df1 <- cor(x = df1$x, y = df1$y)
 cor_df1
 ```
+
+### Task 
 
 Compute the other R-values to confirm your answer.
 
@@ -192,9 +145,9 @@ ggplot(data=df1, aes(x=x,y=y)) +
   geom_abline(intercept = -0.01505, slope = -0.59011, color='hotpink')
 ```
 
-### Task 1
+### Task 2
 
-Compute the sum of square residuals and save it to the variable `my_rss`: (Refer to the last worksheet)
+Compute the sum of square residuals and save it to the variable `my_rss` (refer to the last worksheet.)
 
 ```{r} 
 your_code
@@ -204,7 +157,7 @@ my_rss <- your_answer
 
 ---
 
-### Task 2
+### Task 3
 
 Find the best fitting line for `df2`, sketch the scatter plot and the line, and compute the sum of the square residuals.
 

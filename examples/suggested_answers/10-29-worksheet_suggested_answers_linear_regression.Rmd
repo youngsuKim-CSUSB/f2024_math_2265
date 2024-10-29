@@ -119,7 +119,7 @@ cor_df1 <- cor(x = df1$x, y = df1$y)
 cor_df1
 ```
 
-### Task 
+### Task 1
 
 Compute the other R-values to confirm your answer.
 
@@ -145,15 +145,22 @@ ggplot(data=df1, aes(x=x,y=y)) +
   geom_abline(intercept = -0.01505, slope = -0.59011, color='hotpink')
 ```
 
-### Task 2
+### Example
 
-Compute the sum of square residuals and save it to the variable `my_rss` (refer to the last worksheet.)
+We will compute the sum of square residuals and save it to the variable `my_rss`. We learned a way in the last worksheet. The `lm` function provides a convenient way. 
 
 ```{r} 
-your_code
-#
-my_rss <- your_answer
+# Computes the residuals of the least squares line
+residuals(model)
 ```
+
+It is a vector, so we need to take the sum of their squares. 
+
+```{r} 
+rss <- sum( (residuals(model))^2 )
+rss
+```
+
 
 ---
 
@@ -178,5 +185,25 @@ your_code
 #
 my_rss2 <- your_answer
 ```
+
+### Plotting residuals
+
+First save the residuals of `df3` as a variable 
+
+```{r}
+model3 <- lm(y~x, data=df3)
+df3$res <- residuals(model3)
+```
+
+```{r}
+hist(df3$res)
+```
+
+```{r}
+ggplot(data=df3, mapping = aes(x = x, y = res)) +
+  geom_point(color='blue') +
+  geom_point(data=df3, mapping = aes(x = x, y = y))
+```
+
 
 ### Share your work and help your group members before uploading your work to Canvas

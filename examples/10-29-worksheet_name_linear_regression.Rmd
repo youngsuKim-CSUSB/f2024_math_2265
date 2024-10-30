@@ -116,7 +116,7 @@ grid.arrange(grobs = plots, ncol = 4)
 
 ### Question
 
-Without computing the correlation coefficients (R-values), list the data frames in increasing order.
+Without computing the correlation coefficients (R-values), list the data frames in decreasing order.
 
 ```{r}
 # change the order of 1,2,3,4 accordingly

@@ -116,7 +116,7 @@ grid.arrange(grobs = plots, ncol = 4)
 
 ### Question
 
-Without computing the correlation coefficients (R-values), list the data frames in increasing order.
+Without computing the correlation coefficients (R-values), list the data frames in decreasing order.
 
 ```{r}
 # change the order of 1,2,3,4 accordingly
@@ -140,9 +140,9 @@ cor_df1
 Compute the other correlation coefficients (R-values) to confirm your answer.
 
 ```{r}
-cor_df2 <- cor(x = df2$x, y = df2$y)
-cor_df3 <- cor(x = df3$x, y = df3$y)
-cor_df4 <- cor(x = df4$x, y = df4$y)
+cor_df2 <- cor(x = df2$x, y = your_answer)
+cor_df3 <- cor(x = df3$x, y = your_answer)
+cor_df4 <- cor(x = df4$x, y = your_answer)
 # display all correlation coefficients
 c(cor_df1, cor_df2, cor_df3, cor_df4)
 ```
@@ -191,7 +191,7 @@ Least squares line
 
 ```{r}
 # linear model
-model2 <- lm(y~x, data = df2)
+model2 <- lm(your_answer, data = df2)
 summary(model2)
 ```
 
@@ -200,14 +200,14 @@ Scatter plot
 ```{r}
 ggplot(data=df2, aes(x=x,y=y)) +
   geom_point() +
-  geom_abline(intercept = coef(model2)[1], slope = coef(model2)[2], color='hotpink')
+  geom_abline(intercept = your_answer, slope = your_answer, color='hotpink')
 ```
 
 Sum of the squared residuals
 
 ```{r} 
 # write your code below
-my_ssr2 <- sum( residuals(model2)^2 )
+my_ssr2 <- sum( your_answer )
 my_ssr2
 ```
 
@@ -219,8 +219,9 @@ my_ssr2
 First find the least squares line and save the residuals of `df4` as a variable 
 
 ```{r}
-model4 <- lm(y~x, data=df4)
+model4 <- lm(your_answer, data=df4)
 df4$res <- residuals(model4)
+print(head(df4))
 ```
 
 Add the intercept and slope of `model4`.
@@ -228,7 +229,7 @@ Add the intercept and slope of `model4`.
 ```{r}
 ggplot(data=df4, aes(x=x,y=y)) +
   geom_point() +
-  geom_abline(intercept = coef(model4)[1], slope = coef(model4)[2], color='hotpink')
+  geom_abline(intercept = your_answer, slope = your_answer, color='hotpink')
 ```
 
 This histogram explains the term `nearly normal residuals`. That is the resudials follow a normal distribution.

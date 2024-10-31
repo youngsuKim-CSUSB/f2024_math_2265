@@ -2,9 +2,7 @@
 title: "Linear Regression II"
 author: "your name"
 date: "2024-10-31"
-output:
-  pdf_document: default
-  html_document: default
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -74,7 +72,7 @@ Recall we use linear regression for a pair of numerical variables, explanatory (
 
 ### Task 
 
-Save all the numerical variables as an R vector to the R variable `numerical_variables` below 
+Save all the numerical variable names as an R vector to the R variable `numerical_variables` below 
 
 - Just copy the names from the previous output and paste them as parameters of the vector 
 - Strings (e.g., variable names) need to be enclosed with quotation marks "variable_name"
@@ -92,7 +90,7 @@ The word *most* requires justification, and we will use two crietria:
 1. The correlation coefficient $R$. 
 2. The sum of squared residuals with respect to the least squares line.
 
-### Best with respect to the correlation coefficient
+## Best with respect to the correlation coefficient
 
 To do this, we will need to compute the correlation coefficients of `price` over all the rest of the numerical variables you found above. Use the following block to compute the correlation coefficients. 
 
@@ -119,7 +117,7 @@ cor_vec <- c(cor_1, cor_2, cor_3, cor_4, cor_5)
 cor_vec
 ```
 
-One of the results may be "NA" since that variable has missing value(s). 
+One of the results may be "NA" since that variable has missing value(s), and we won't use it for this worksheet.
 
 Use `sort`, `max`, or `min` to determine the best one. Recall when determining the best, we need to consider their absolute values. 
 
@@ -127,100 +125,157 @@ Use `sort`, `max`, or `min` to determine the best one. Recall when determining t
 sort(abs(cor_vec))
 ```
 
-### Question: Which variables are linearly associated `price`? 
+---
 
-Choose top two:
+**Question:** Which variables are linearly associated `price`? 
 
-1. your_answer
-2. your_answer
+Write the top two:
 
-### Best with respect to the least squares line
+1. "your_answer"
+2. "your_answer"
 
-To do this, we will use `lm`. However, to use linear regression, we need to check that the data follows the linear trend. That is, the association is linear. We can check this using their scatter plots. 
+---
+
+## Best with respect to the least squares line
+
+To do this, we will use `lm`. However, to use linear regression, we need to check that the variables are linearly associated with `price`. We can check it with their scatter plots. 
 
 In the next cell, make scatter plots for each of the explanatory variables. 
 
 ```{r}
-ggplot2(data=duke_forest, aes(x=your_naswer,y=price))+
+# ggplot(data=duke_forest, aes(x=your_naswer,y=price))+
+#   geom_point()
+# 
+# ggplot(data=duke_forest, aes(x=your_naswer,y=price))+
+#   geom_point()
+# 
+# ggplot(data=duke_forest, aes(x=your_naswer,y=price))+
+#   geom_point()
+# 
+# # Use as many as you need and delete the rest
+# ggplot(data=duke_forest, aes(x=your_naswer,y=price))+
+#   geom_point()
+# 
+# ggplot(data=duke_forest, aes(x=your_naswer,y=price))+
+#   geom_point()
+# 
+# ggplot(data=duke_forest, aes(x=your_naswer,y=price))+
+#   geom_point()
+
+ggplot(data=duke_forest, aes(x=bed,y=price))+
   geom_point()
 
-ggplot2(data=duke_forest, aes(x=your_naswer,y=price))+
+ggplot(data=duke_forest, aes(x=bath,y=price))+
   geom_point()
 
-ggplot2(data=duke_forest, aes(x=your_naswer,y=price))+
+ggplot(data=duke_forest, aes(x=area,y=price))+
   geom_point()
 
-# Use as many as you need and delete the rest
-ggplot2(data=duke_forest, aes(x=your_naswer,y=price))+
-  geom_point()
-
-ggplot2(data=duke_forest, aes(x=your_naswer,y=price))+
-  geom_point()
-
-ggplot2(data=duke_forest, aes(x=your_naswer,y=price))+
+ggplot(data=duke_forest, aes(x=year_built,y=price))+
   geom_point()
 ```
 
-Use the correlation coefficient and scatter plots to choose two best candidates for linear regression. Now we will use `lm` to find the least suqres line and the sum of squared residuals for each case. 
+---
+
+**Question:** Which two variables have the strongest linear association with `price`. 
+
+Answer:
+
+1. your_answer
+2. your_answer
+
+---
+
+Now, we will use `lm` to find the least squares line and the sum of squared residuals for these two variables. 
+
+### Task
 
 Save the linear model for your 1st choice
 
 ```{r}
-model1 <- lm( price ~ your_answer, data=duke_forest)
+# model1 <- lm( price ~ your_answer, data=duke_forest)
+model1 <- lm( price ~ area, data=duke_forest)
 summary(model1) 
 ```
 
 Compute the sum of the squared residuals and save it to `ssr1`.
 
 ```{r}
-ssr1 <- sum( your_answer) 
+# ssr1 <- sum( your_answer) 
+ssr1 <- sum( residuals(model1)^2 ) 
 ssr1
 ```
 
 Save the linear model for your 2nd choice
 
 ```{r}
-model2 <- lm( price ~ your_answer, data=duke_forest)
+# model2 <- lm( price ~ your_answer, data=duke_forest)
+model2 <- lm( price ~ year_built, data=duke_forest)
 summary(model2) 
 ```
 
 Compute the sum of the squared residuals and save it to `ssr2`.
 
 ```{r}
-ssr2 <- sum( your_answer) 
+# ssr2 <- sum( your_answer) 
+ssr2 <- sum( residuals(model2)^2 )
 ssr2
 ```
+
+Execute the next line to compare the results.
+
+```{r}
+if(ssr1 < ssr2) {
+  print("Your 1st choice has lower error. Use this to make a prediction in the next part.")
+} else {
+  print("Your 2nd choice has lower error. Use this to make a prediction in the next part.")
+}
+```
+
+---
 
 ### Question:
 
 Which variable explains the responds variable `price` better?
+
+Answer:
+
+---
 
 ### Make prediction based on your model
 
 First plot the least squares line. Use your answer above as your explanatory variable. 
 
 ```{r}
-ggplot2(data=duke_forest, aes(x = your_answer, y = price)) +
+# ggplot(data=duke_forest, aes(x = your_answer, y = price)) +
+#   geom_point() + 
+#   geom_abline(intercept = your_answer, slope = your_answer, color='hotpink')
+
+ggplot(data=duke_forest, aes(x = area, y = price)) +
   geom_point() + 
-  geom_abline(intercept = your_answer, slope = your_answer)
+  geom_abline(intercept = 116652.33 , slope = 159.48, color='hotpink')
 ```
 
 Make a prediction where your $x$ value is the median and mean of your variable. That is if your variable is called `my_expanatory_variable`, $x = median(my_expanatory_variable)$ or $x = mean(my_expanatory_variable)$.
 
 ```{r}
-x <- median(my_expanatory_variable)
+# x <- median(duke_forest$my_expanatory_variable)
 # or use mean (or do both)
-# x <- mean(my_expanatory_variable)
+# x <- mean(duke_forest$my_expanatory_variable)
+x <- median(duke_forest$area)
 
 y_hat <- function(x) {
-  intercept + slope * x
+  # intercept + slope * x
+  116652.33 + 159.48 * x
 }
 
-print(paste(c("For", x, "y_hat(x) = ", yhat(x))))
+# You do not need to modify the following two lines. It will print the outcome.
+print(paste("For", x, "y_hat(x) = ", y_hat(x)))
+print(paste("That is, for a house of your variable ", x, "the estimated price is $", y_hat(x)))
 ```
 
 ## Please only submit your work if you attended the class and worked with other students; this is not an online course
 
 ## Complete the handout as a group, and turn it in to the instructor
 
-<!-- ### Share your work and help your group members before uploading your work to Canvas -->
+### Share your work and help your group members before uploading your work to Canvas

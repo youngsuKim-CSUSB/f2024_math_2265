@@ -24,14 +24,6 @@ library(tinytex)  # to knit to PDF
 set.seed(2265)
 ```
 
-This will download the dataset needed for this worksheet. If it does not work, notify the instructor.
-
-```{r, include=FALSE}
-url <- "https://github.com/youngsuKim-CSUSB/f2024_math_2265/raw/linear_regression/examples/data/_datasets.csv"
-destfile <- "correlated_datasets.csv"  
-download.file(url, destfile, mode = "wb")
-```
-
 ## Math 2265 Chapter 8. Linear Regression
 
 - Work as a group!
@@ -74,6 +66,7 @@ Write a script to display the number of observations and the names of the variab
 
 ```{r}
 # write your code 
+str(duke_forest)
 ``` 
 
 Recall we use linear regression for a pair of numerical variables, explanatory (often denoted by x) and response variable (often denoted by y).   
@@ -84,7 +77,8 @@ Save all the numerical variables as an R vector to the R variable `numerical_var
 - Variable names need to be enclosed with quotation marks "variable_name"
 
 ```{r}
-numerical_variable <- c("variable_name1","variable_name2",...,...)
+# numerical_variable <- c("variable_name1","variable_name2",...,...)
+numerical_variable <- c("price","bed","bath","area","year_built","lot")
 numerical_variable 
 ```
 
@@ -95,21 +89,34 @@ The word most requires justification, and we will use two methods:
 1. The correlation coefficient $R$. 
 2. The sum of squared residuals with respect to the least squares line.
 
-
 ### Best with respect to the correlation coefficient
 
 To do this, we will need to compute the correlation coefficients over all the numerical variables you found above. Use the following to compute the correlation coefficients. 
 
 ```{r}
 ### 
-cor_1 <- 
-cor_2 <- 
-cor_3 <- 
-# add additional cor_ as many as you need
+#cor_1 <- 
+#cor_2 <- 
+#cor_3 <-
+#cor_4 <-
+#cor_5 <-
+#cor_6 <-
+#cor_7 <-
+#cor_8 <-
+# use as many as you need and delete unused ones
 
-cor_vec <- c(cor_1, cor_2, cor_3, your_answer, your_answer, ... ) 
+cor_1 <- cor(x=duke_forest$price, y=duke_forest$bed)
+cor_2 <- cor(x=duke_forest$price, y=duke_forest$bath)
+cor_3 <- cor(x=duke_forest$price, y=duke_forest$area)
+cor_4 <- cor(x=duke_forest$price, y=duke_forest$year_built)
+cor_5 <- cor(x=duke_forest$price, y=duke_forest$lot)
+  
+# cor_vec <- c(cor_1, cor_2, cor_3, your_answer, your_answer, ... ) 
+cor_vec <- c(cor_1, cor_2, cor_3, cor_4, cor_5)
 cor_vec
 ```
+
+One of the results may be "NA" since that variable has missing value(s). 
 
 Use `sort`, `max`, or `min` to determine the best one. Recall when determining the best, we need to consider their absolute values. 
 

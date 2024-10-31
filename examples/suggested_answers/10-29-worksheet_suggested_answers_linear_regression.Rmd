@@ -1,7 +1,7 @@
 ---
-title: "Linear Regression Basics"
+title: "Linear Regression I"
 author: "your name"
-date: "2024-10-24"
+date: "2024-10-29"
 output:
   pdf_document: default
   html_document: default

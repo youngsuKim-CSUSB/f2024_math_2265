@@ -119,7 +119,7 @@ sort(abs(cor_vec))
 
 ---
 
-**Question:** Which variables are linearly associated `price`? 
+**Question:** Which variables are linearly associated with the variable `price`? 
 
 Write the top two:
 

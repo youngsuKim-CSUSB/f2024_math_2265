@@ -137,7 +137,7 @@ Can you read the output?
 Complete the following code to take 2,000 samples. 
 
 ```{r}
-sample_proportions <- replicate(2000, table(sample(population, 1000))["success"]) # ["success"] is to choose the number of successes in the table
+sample_proportions <- replicate(your_answer, table(sample(population, 1000))["success"]) # ["success"] is to choose the number of successes in the table
 sample_proportions <- sample_proportions/1000 # we divide by 1000 to get the proportion
 head(sample_proportions)
 ```

@@ -8,6 +8,7 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(openintro)
+library(mosaic)
 library(ggplot2)
 if (!tinytex::is_tinytex()) {
   latex_installed <- Sys.which("tlmgr") != ""
@@ -60,13 +61,13 @@ The icon is located in the upper-left corner next to `source`.
 
 # Normal distribution, Central Limit Theorem, Confidence Interval
 
-This worksheet is to understand the phase such as "95% OF MEANS PROJECTED TO FALL IN THIS RANGE." In a nutshell, we want to guess the `mean of the population` from the `mean of a sample` with, often, 95% confidence. 
+This worksheet is to understand the phrase such as "95% OF MEANS PROJECTED TO FALL IN THIS RANGE." In a nutshell, we want to guess the `mean of the population` from the `mean of a sample` with, often, 95% confidence. 
 
-In the last worksheet, we created a population of size 50,000 consisting of "successes" and "fails" and took 2,000 samples of size 1,000 each. The task was to estimate the population proportion $p = 0.66$ based on the sample proportions (often denoted by $\hat{p}$. 
+In the last worksheet, we created a population of size 50,000 consisting of "successes" and "fails" and took 2,000 samples of size 1,000 each. The task was to estimate the population proportion $p = 0.66028$ based on the sample proportions (often denoted by $\hat{p}$. 
 
 Summary:
-- Population proportion $p = 0.xx$
-- Each sample need not have the same proportion or the population proportion.
+- Population proportion $p = 0.66028$
+- Samples need not have the same proportion or the population proportion.
 - However, their distribution follows a normal distribution:
   - This is the consequence of the central limit theorem. 
   - The mean of this distribution is close to the population proportion
@@ -76,12 +77,12 @@ Last time, we saw a question of "will the mean be closer to the population propo
 - Size of each sample 
 - Number of samples we take
 
-We took 2,000 samples each of size 1,000. So the distribution of the sample proportions consist of 2,000 observations and its mean is an excellent estimate of the population proportion. 
+We took 2,000 samples each of size 1,000. So the distribution of the sample proportions consist of 2,000 observations and its mean was an excellent estimate of the population proportion. 
 
-In the following, we verify this experimentally by varing the number of samples we take with 
-100, 500, 1,000, and 5,000. 
+In the following, we vary the number of samples we take with 
+100, 500, 1,000, and 5,000 to support our answer experimentally. 
 
-Note: We can execute the following with a `for` loop. But since it is not a programming course, we will be happy with executing it four times (copy and paste works). 
+Note: We can execute the following with a `for` loop instead of using four code blocks. But since it is not a programming course, we will be happy with executing it four times. 
 
 ```{r}
 # the first two lines randomize the probability
@@ -94,64 +95,115 @@ population <-sample(c("success", "fail"), 50000, replace = TRUE, prob=probabilit
 head(population)
 ```
 
-100 Samples
-```{r}
-number_of_samples <- 100
-sample_means <- replicate(number_of_samples, table(sample(population, 1,000))["success"])
-sample_means <- sample_means/number_of_samples
-head(sample_means)
-hist(sample_means)
-```
+### Varying the number of sample
 
 100 Samples
+
 ```{r}
 number_of_samples <- 100
-sample_means <- replicate(number_of_samples, table(sample(population, 1,000))["success"])
-sample_means <- sample_means/number_of_samples
-head(sample_means)
-hist(sample_means)
+sample_means <- replicate(number_of_samples, table(sample(population, 1000))["success"])
+sample_means <- sample_means / 1000
+hist(sample_means, main="100 Samples", xlab="Sample Means")
+print(paste("Mean with", number_of_samples, "is", mean(sample_means)))
 ```
 
-100 Samples
+500 Samples
+
 ```{r}
-number_of_samples <- 100
-sample_means <- replicate(number_of_samples, table(sample(population, 1,000))["success"])
-sample_means <- sample_means/number_of_samples
-head(sample_means)
-hist(sample_means)
+number_of_samples <- 500
+sample_means <- replicate(number_of_samples, table(sample(population, 1000))["success"])
+sample_means <- sample_means / 1000
+hist(sample_means, main="500 Samples", xlab="Sample Means")
+print(paste("Mean with", number_of_samples, "is", mean(sample_means)))
 ```
-
-100 Samples
-```{r}
-number_of_samples <- 100
-sample_means <- replicate(number_of_samples, table(sample(population, 1,000))["success"])
-sample_means <- sample_means/number_of_samples
-head(sample_means)
-hist(sample_means)
-```
-
-We can also vary each sample size while fixing the number of samples, say 1,000. 
 
 1,000 Samples
+
 ```{r}
 number_of_samples <- 1000
-sample_means <- replicate(number_of_samples, table(sample(population, 50))["success"])
-sample_means <- sample_means/number_of_samples
-head(sample_means)
-hist(sample_means)
+sample_means <- replicate(number_of_samples, table(sample(population, 1000))["success"])
+sample_means <- sample_means / 1000
+hist(sample_means, main="1,000 Samples", xlab="Sample Means")
+print(paste("Mean with", number_of_samples, "is", mean(sample_means)))
+```
 
-add more.
+5,000 Samples
+
+```{r}
+number_of_samples <- 5000
+sample_means <- replicate(number_of_samples, table(sample(population, 1000))["success"])
+sample_means <- sample_means / 1000
+hist(sample_means, main="5,000 Samples", xlab="Sample Means")
+print(paste("Mean with", number_of_samples, "is", mean(sample_means)))
+```
+
+Varying the sample size
+
+Now, we fix the number of samples at 1,000 and vary the observations in each sample to 50, 500, and 2,000.
+
+50 observations in each sample
+
+```{r}
+number_of_samples <- 1000
+number_of_observations_in_sample <- 50
+sample_means <- replicate(number_of_samples, table(sample(population, number_of_observations_in_sample))["success"])
+sample_means <- sample_means / number_of_observations_in_sample
+hist(sample_means, main="Sample Size: 50", xlab="Sample Means")
+```
+
+```{r}
+number_of_samples <- 1000
+number_of_observations_in_sample <- 500
+sample_means <- replicate(number_of_samples, table(sample(population, number_of_observations_in_sample))["success"])
+sample_means <- sample_means / number_of_observations_in_sample
+hist(sample_means, main="Sample Size: 500", xlab="Sample Means")
+```
+
+```{r}
+number_of_samples <- 1000
+number_of_observations_in_sample <- 2000
+sample_means <- replicate(number_of_samples, table(sample(population, number_of_observations_in_sample))["success"])
+sample_means <- sample_means / number_of_observations_in_sample
+hist(sample_means, main="Sample Size: 2,000", xlab="Sample Means")
+```
+
 
 ---
 
 The population proportion in the example above is based on a categorical variable. 
-The central limit theorem applies for numerical variables too. 
+The central limit theorem applies to numerical variables too. Next time we will an example. 
 
-Next time we will have an example where the population parameter is a numerical variable and how we can approximate the population mean by sample means. It will be essentially the sample where the population proportion is replaced by the population mean.
+By the central limit theorem, we can estimate the population parameter by sample statistics.
+In reality, it is not easy to take several samples (for instance, conducting surveys cost a lot of money and effort).  
+Often, we rely on few samples if not one. 
 
-By the central limit theorem, we may estimate the population parameter with samples, in reality, it is not easy to take several samples. Often, we rely on few samples if not one. Point estimates are sample statistics. In the example above, the sample proportion $\hat{p}$ is a point estimate. Point estimates vary and almost never be the population parameter we are interested in. Hence it is often more reasonable making an interval around the point estimate. This interval is called the **confidence interval**. 
+Point estimates are sample statistics. In the example above, the sample proportion $\hat{p}$ is a point estimate. Point estimates vary and almost never be the population parameter we are interested in. Hence it is often more reasonable making an interval around the point estimate. This interval is called the **confidence interval**. 
 
+The most often used interval is 95%. Recall for the standard normal distribution $P( -2 < Z < 2) \approx 0.9544$ which is slightly over 95%. For 95%, -1.96 and 1.96 will do the job.
 
----
+```{r}
+xpnorm(c(-2,2))
+xpnorm(c(-1.96,1.96))
+```
+Remember, when we were given data, we used the Z-score to convert it to the standard normal distribution scale. 
+$$
+Z = \frac{x - \mu}{\sigma},
+$$
+where $\mu$ is the mean and $\sigma$ is the standard deviation. In the proportion setting, we use 
+
+For proportions, we the standard error plays the role of the standard deviation and it provides the confidence interval. In short, the higher the confidence level, the wider the confidence interval. That is, the 99% confidence interval is wider than the 95% confidence interval.
+
+The standard error for with the population proportion $p$ is defined as
+
+$$
+SE_p = \sqrt{\frac{p (1-p)}{n}},
+$$
+where $n$ is the sample size (the number of observations in the sample).
+
+Since we often do not know $p$, we use the point estimate $\hat{p}$. This is called the **plug-in principle**. That is, 
+
+$$
+SE_p = \sqrt{\frac{p (1-p)}{n}} \approx \sqrt{\frac{\hat{p} (1-\hat{p})}{n}}
+$$
 
 

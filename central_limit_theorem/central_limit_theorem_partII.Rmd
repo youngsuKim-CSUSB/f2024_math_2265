@@ -63,24 +63,25 @@ The icon is located in the upper-left corner next to `source`.
 
 This worksheet is to understand the phrase such as "95% OF MEANS PROJECTED TO FALL IN THIS RANGE." In a nutshell, we want to guess the `mean of the population` from the `mean of a sample` with, often, 95% confidence. 
 
-In the last worksheet, we created a population of size 50,000 consisting of "successes" and "fails" and took 2,000 samples of size 1,000 each. The task was to estimate the population proportion $p = 0.66028$ based on the sample proportions (often denoted by $\hat{p}$. 
+In the last worksheet, we created a population of size 50,000 consisting of "successes" and "fails" and took 2,000 samples each of size 1,000. We used the mean of this distribution, consisting of the sample proportions (often denoted by $\hat{p}$, to estimate the population proportion $p = 0.66028$.
 
 Summary:
 - Population proportion $p = 0.66028$
-- Samples need not have the same proportion or the population proportion.
-- However, their distribution follows a normal distribution:
+- Samples need not have the same proportions or the population proportion.
+- However, the distribution of the sample proportions follows a normal distribution whose mean approxmiates the population proportion.
   - This is the consequence of the central limit theorem. 
-  - The mean of this distribution is close to the population proportion
 
-Last time, we saw a question of "will the mean be closer to the population proportion and the standard deviation will be smaller if we take more samples". Be careful, there are two sizes:
+Last time, we had a question of "will the mean be closer to the population proportion and the standard deviation will be smaller if we take more samples". Be careful, there are two sizes:
 
 - Size of each sample 
 - Number of samples we take
 
-We took 2,000 samples each of size 1,000. So the distribution of the sample proportions consist of 2,000 observations and its mean was an excellent estimate of the population proportion. 
+We took 2,000 samples each of size 1,000. So the distribution of the sample proportions consist of 2,000 observations and its mean is an excellent estimate of the population proportion. 
+
+### Varying the number of samples
 
 In the following, we vary the number of samples we take with 
-100, 500, 1,000, and 5,000 to support our answer experimentally. 
+100, 1,000, and 5,000 to support our answer experimentally. 
 
 Note: We can execute the following with a `for` loop instead of using four code blocks. But since it is not a programming course, we will be happy with executing it four times. 
 
@@ -107,16 +108,6 @@ hist(sample_means, main="100 Samples", xlab="Sample Means")
 print(paste("Mean with", number_of_samples, "is", mean(sample_means)))
 ```
 
-500 Samples
-
-```{r}
-number_of_samples <- 500
-sample_means <- replicate(number_of_samples, table(sample(population, 1000))["success"])
-sample_means <- sample_means / 1000
-hist(sample_means, main="500 Samples", xlab="Sample Means")
-print(paste("Mean with", number_of_samples, "is", mean(sample_means)))
-```
-
 1,000 Samples
 
 ```{r}
@@ -137,7 +128,7 @@ hist(sample_means, main="5,000 Samples", xlab="Sample Means")
 print(paste("Mean with", number_of_samples, "is", mean(sample_means)))
 ```
 
-Varying the sample size
+### Varying the sample size
 
 Now, we fix the number of samples at 1,000 and vary the observations in each sample to 50, 500, and 2,000.
 
@@ -167,17 +158,21 @@ sample_means <- sample_means / number_of_observations_in_sample
 hist(sample_means, main="Sample Size: 2,000", xlab="Sample Means")
 ```
 
+---
+
+Add question
+
+You will be asked to write down the means and standard deviation of each simulation.
 
 ---
 
-The population proportion in the example above is based on a categorical variable. 
+The population proportion in the example above was based on a categorical variable. 
 The central limit theorem applies to numerical variables too. Next time we will an example. 
 
 By the central limit theorem, we can estimate the population parameter by sample statistics.
-In reality, it is not easy to take several samples (for instance, conducting surveys cost a lot of money and effort).  
-Often, we rely on few samples if not one. 
+In reality, it is not easy to obtain several samples (for instance, conducting multiple surveys cost a lot of money and effort). Often, we rely on few samples if not one. 
 
-Point estimates are sample statistics. In the example above, the sample proportion $\hat{p}$ is a point estimate. Point estimates vary and almost never be the population parameter we are interested in. Hence it is often more reasonable making an interval around the point estimate. This interval is called the **confidence interval**. 
+Point estimates are sample statistics. In the example above, the sample proportion $\hat{p}$ is a point estimate. Point estimates vary and almost never be the population parameter we are interested in. Hence it is often more reasonable making an interval around a point estimate. This interval is called the **confidence interval**. 
 
 The most often used interval is 95%. Recall for the standard normal distribution $P( -2 < Z < 2) \approx 0.9544$ which is slightly over 95%. For 95%, -1.96 and 1.96 will do the job.
 
@@ -185,25 +180,42 @@ The most often used interval is 95%. Recall for the standard normal distribution
 xpnorm(c(-2,2))
 xpnorm(c(-1.96,1.96))
 ```
+In short, the higher the confidence level, the wider the confidence interval. That is, the 99% confidence interval is wider than the 95% confidence interval. The 99% interval does not necessarily mean better than the 95% interval. For instance, 99% of time people arrive to a party within 4 hours of the starting time is less useful then 95% of time people arrive to a party within 2 hours. 
+
 Remember, when we were given data, we used the Z-score to convert it to the standard normal distribution scale. 
 $$
 Z = \frac{x - \mu}{\sigma},
 $$
-where $\mu$ is the mean and $\sigma$ is the standard deviation. In the proportion setting, we use 
-
-For proportions, we the standard error plays the role of the standard deviation and it provides the confidence interval. In short, the higher the confidence level, the wider the confidence interval. That is, the 99% confidence interval is wider than the 95% confidence interval.
-
-The standard error for with the population proportion $p$ is defined as
+where $\mu$ is the mean and $\sigma$ is the standard deviation. In the proportion setting, we use the standard error for with the population proportion $p$ is defined as
 
 $$
 SE_p = \sqrt{\frac{p (1-p)}{n}},
 $$
-where $n$ is the sample size (the number of observations in the sample).
 
-Since we often do not know $p$, we use the point estimate $\hat{p}$. This is called the **plug-in principle**. That is, 
+where $n$ is the sample size (the number of observations in the sample). Since we often do not know $p$, we use the point estimate $\hat{p}$. This is called the **plug-in principle**. That is, 
 
 $$
 SE_p = \sqrt{\frac{p (1-p)}{n}} \approx \sqrt{\frac{\hat{p} (1-\hat{p})}{n}}
 $$
 
+For proportions, the standard error plays the role of the standard deviation, and it provides the confidence interval. 
 
+### Task 
+
+Find the 95% confidence interval for the following point estimate. Use the plug-in principle for the standard error. 
+
+In the next code blocks, follow these steps to find the 95% confidence interval.
+
+1. Identity the point estimate `p_hat`
+2. Use `p_hat` and the plug-in principle to compute the standard error
+3. Compute the end points of the interval using the formula
+   $$
+    (p_hat - 1.96 \cdot SE, p_hat + 1.96 \cdot SE)
+$$
+
+
+```{r}
+add experiment 
+```
+
+Question: What does it mean by the 95% confidnece interval?
